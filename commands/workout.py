@@ -127,6 +127,7 @@ class ExerciseView(View):
         embed.add_field(name="Agility", value=f"+{exercise_stats["agility"]}", inline=True)
         embed.add_field(name="Endurance", value=f"+{exercise_stats["endurance"]}", inline=True)
         embed.add_field(name="Flexibility", value=f"+{exercise_stats["flexibility"]}", inline=True)
+        embed.add_field(name="", value="", inline=True)
         embed.set_image(url=None)
         await interaction.response.edit_message(
             embed=embed,
