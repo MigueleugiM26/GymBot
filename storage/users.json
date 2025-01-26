@@ -2,20 +2,23 @@
     "450842915024142374": {
         "level": 6,
         "hp": 7,
-        "strength": 48,
-        "agility": 6,
-        "endurance": 39,
-        "flexibility": 13,
-        "skill": 22,
+        "strength": 54,
+        "agility": 10,
+        "endurance": 43,
+        "flexibility": 14,
+        "skill": 25,
         "hasRoutine": true,
-        "exercisesDone": 0,
-        "workoutMessageId": 1333161645320572990,
+        "exercisesDone": 3,
+        "workoutMessageId": 1333171383382970398,
         "groupsDone": [
             "Back",
             "Cardio",
             "Shoulders",
             "Arms",
-            "Chest"
+            "Chest",
+            "Full Body",
+            "Core",
+            "Legs"
         ]
     },
     "345994187742773248": {
@@ -39,8 +42,8 @@
         "endurance": 4,
         "flexibility": 0,
         "skill": 2,
-        "hasRoutine": true,
-        "exercisesDone": 2,
+        "hasRoutine": false,
+        "exercisesDone": 0,
         "workoutMessageId": 1333155609033310259,
         "groupsDone": [
             "Full Body"

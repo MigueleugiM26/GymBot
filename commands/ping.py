@@ -1,5 +1,6 @@
 from discord.app_commands import command
 
+
 @command(name="ping", description="Latency.")
 async def ping(interaction):
     bot_latency = round(ping.client.latency * 1000)

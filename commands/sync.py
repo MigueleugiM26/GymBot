@@ -1,5 +1,6 @@
 from discord.app_commands import command
 
+
 @command(name='sync', description='Sync commands.')
 async def sync(interaction):
     if interaction.user.id == 450842915024142374:

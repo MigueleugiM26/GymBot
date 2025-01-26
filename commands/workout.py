@@ -1,47 +1,14 @@
 import discord
-from discord.app_commands import command
-from discord import Interaction
-from discord import Message
-from discord.ui import Button, View
 import json
 import random
+from commands.globalFunctions import load_user_data, load_xp_data, save_user_data, get_user_entry
+from discord.app_commands import command
+from discord import Interaction, Message
+from discord.ui import Button, View
 from functools import partial
 
 with open("storage/groups.json", "r") as file:
     groups_data = json.load(file)
-
-def load_xp_data():
-    with open("storage/levelTable.json", "r") as file:
-        return json.load(file)
-    
-def load_user_data():
-    with open("storage/users.json", "r") as file:
-        return json.load(file)
-
-def save_user_data(user_data):
-    with open("storage/users.json", "w") as file:
-        json.dump(user_data, file, indent=4)
-
-def get_user_entry(user_id):
-    user_data = load_user_data()
-    user_id = str(user_id) 
-    
-    if user_id not in user_data:
-        user_data[user_id] = {
-            "level": 1, 
-            "hp": 2,
-            "strength": 1,
-            "agility": 1,
-            "endurance": 1,
-            "flexibility": 1,
-            "skill": 0,
-            "hasRoutine": False,
-            "workoutMessageId": "",
-            "exercisesDone": 0,
-            "groupsDone": []
-        }
-        save_user_data(user_data)  
-    return user_data[user_id]
 
 
 class ExerciseView(View):
@@ -91,17 +58,23 @@ class ExerciseView(View):
 
         return button_callback
     
+
     async def update_reps_callback(self, interaction: discord.Interaction, exercise_name: str, total_reps: int, increment: bool):
+        exercise = next((ex for ex in self.exercises if ex["name"] == exercise_name), None)
+    
+        if exercise is None:
+            return
+    
         if increment:
-            self.reps_done[exercise_name] += self.exercises[0]["reps"]
+            self.reps_done[exercise_name] += exercise["reps"]
         else:
-            self.reps_done[exercise_name] -= self.exercises[0]["reps"]
+            self.reps_done[exercise_name] -= exercise["reps"]
 
         current_reps = self.reps_done[exercise_name]
 
         embed = discord.Embed(title=exercise_name, description="", color=discord.Color.dark_gold())
         embed.add_field(name="Repetitions (or seconds)", value=f"{current_reps}/{total_reps}")
-        embed.set_image(url=self.exercises[0]["gif"])
+        embed.set_image(url=exercise["gif"])
 
         btnMinusReps = Button(label="[-]", style=discord.ButtonStyle.red, disabled=current_reps <= 0)
         btnPlusReps = Button(label="[+]", style=discord.ButtonStyle.green, disabled=current_reps >= total_reps)
@@ -118,6 +91,7 @@ class ExerciseView(View):
 
         await interaction.response.edit_message(embed=embed, view=view)
     
+
     async def finish_exercise_callback(self, interaction: discord.Interaction, exercise_name: str, button: Button):
         exercise_stats = self.get_exercise_stats(exercise_name)
         button.disabled = True
@@ -154,6 +128,7 @@ class ExerciseView(View):
                 return {"strength": exercise["strength"], "agility": exercise["agility"], "endurance": exercise["endurance"], "flexibility": exercise["flexibility"]}
         return {"strength": 0, "agility": 0, "endurance": 0, "flexibility": 0}  
 
+
     async def apply_exercise_stats(self, stats, interaction):
         for stat, value in stats.items():
             if stat == "name": 
@@ -187,9 +162,6 @@ class ExerciseView(View):
 
 def get_random_exercise_set(interaction, groups_data, user_data):
     user_id = str(interaction.user.id)
-
-    if user_id not in user_data:
-        user_data[user_id] = {"groupsDone": []}
 
     groupsDone = user_data[user_id]["groupsDone"]
 
@@ -253,7 +225,6 @@ async def workout(interaction: Interaction):
     user_entry["workoutMessageId"] = workout_message.id  
     user_data[user_id] = user_entry  
     save_user_data(user_data)
-
 
 
 def setup(command_tree):
