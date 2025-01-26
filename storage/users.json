@@ -1,20 +1,26 @@
 {
-    "450842915024142374": {
-        "level": 2,
-        "hp": 2,
-        "strength": 16,
-        "agility": 3,
-        "endurance": 22,
-        "flexibility": 4,
-        "skill": 10
-    },
-    "345994187742773248": {
-        "level": 1,
-        "hp": 2,
-        "strength": 8,
-        "agility": 2,
-        "endurance": 5,
-        "flexibility": 1,
-        "skill": 3
-    }
+  "450842915024142374": {
+    "level": 3,
+    "hp": 2,
+    "strength": 22,
+    "agility": 3,
+    "endurance": 24,
+    "flexibility": 4,
+    "skill": 11,
+    "hasRoutine": true,
+    "hasWorkedOut": false,
+    "workoutMessageId": 1333063301080547365
+  },
+  "345994187742773248": {
+    "level": 1,
+    "hp": 2,
+    "strength": 8,
+    "agility": 2,
+    "endurance": 5,
+    "flexibility": 1,
+    "skill": 3,
+    "hasRoutine": false,
+    "hasWorkedOut": false,
+    "workoutMessageId": ""
+  }
 }

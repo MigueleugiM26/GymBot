@@ -3,6 +3,7 @@ from discord.ext import commands
 from discord import app_commands
 
 from commands import workout
+from commands import mirror
 from commands import ping
 from commands import sync
 
@@ -11,6 +12,7 @@ client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 
 workout.setup(tree)
+mirror.setup(tree)
 ping.setup(tree)
 sync.setup(tree)
 
@@ -18,7 +20,7 @@ sync.setup(tree)
 async def on_ready():
     try:
         guild = discord.Object(id=1180945248013254808)
-        synced = await tree.sync(guild=guild)
+        synced = await tree.sync(guild=None)
         print(f"Synced {len(synced)} command(s) to the guild: {1180945248013254808}.")
     except Exception as e:
         print(f"Failed to sync commands: {e}")

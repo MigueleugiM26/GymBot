@@ -1,6 +1,7 @@
 import discord
 from discord.app_commands import command
 from discord import Interaction
+from discord import Message
 from discord.ui import Button, View
 import json
 import random
@@ -143,19 +144,20 @@ class ExerciseView(View):
             self.user_entry[stat] += value
             
         self.user_entry["skill"] += 1
-        self.user_entry["level"] = 1 + self.user_entry["skill"] // 10
-
+        self.user_entry["level"] = int(1 + (self.user_entry["skill"] ** 1.2) / 10)
 
 @command(name="workout", description="A set of exercises")
 async def workout(interaction: Interaction):
-    user_entry = get_user_entry(interaction.user.id) 
+    user_data = load_user_data() 
+    user_id = str(interaction.user.id) 
+    user_entry = user_data.get(user_id)
     
     if user_entry["hasRoutine"]:
         if "workoutMessageId" in user_entry:
             try:
                 workout_message = await interaction.channel.fetch_message(user_entry["workoutMessageId"])
                 await interaction.response.send_message(
-                    f"You already have an active routine today! Check it out here: {workout_message.jump_url}",
+                    f"{interaction.user.display_name}, you already have an active routine today! Check it out here: {workout_message.jump_url}",
                     ephemeral=True
                 )
                 return
@@ -174,13 +176,17 @@ async def workout(interaction: Interaction):
 
     view = ExerciseView(exercises, user_entry)  
     exercises_list = "\n-".join([exercise["name"] for exercise in exercises])
-    user_entry["hasRoutine"] = True
 
-
-    await interaction.response.send_message(
-        f"Today, you will work out your **{random_set['name']}**!\n\nExercises:\n-{exercises_list}\n\nClick the buttons below for each exercise!",
+    await interaction.response.defer()
+    workout_message: Message = await interaction.followup.send(
+        f"{interaction.user.mention}, today, you will work out your **{random_set['name']}**!\n\nExercises:\n-{exercises_list}\n\nClick the buttons below for each exercise!",
         view=view
     )
+
+    user_entry["hasRoutine"] = True
+    user_entry["workoutMessageId"] = workout_message.id  
+    user_data[user_id] = user_entry  
+    save_user_data(user_data)
 
 
 
