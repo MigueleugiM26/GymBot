@@ -1,0 +1,260 @@
+{
+  "groups": [
+    {
+      "name": "Full Body",
+      "exercises": [
+        {
+          "name": "Push-ups",
+          "strength": 2,
+          "agility": 0,
+          "endurance": 1,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Squats",
+          "strength": 1,
+          "agility": 0,
+          "endurance": 2,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Plank",
+          "strength": 0,
+          "agility": 0,
+          "endurance": 3,
+          "flexibility": 1,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        }
+      ]
+    },
+    {
+      "name": "Cardio",
+      "exercises": [
+        {
+          "name": "Burpees",
+          "strength": 2,
+          "agility": 1,
+          "endurance": 2,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Jumping Jacks",
+          "strength": 0,
+          "agility": 2,
+          "endurance": 2,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Sit-ups",
+          "strength": 1,
+          "agility": 0,
+          "endurance": 3,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        }
+      ]
+    },
+    {
+      "name": "Shoulders",
+      "exercises": [
+        {
+          "name": "Overhead Dumbbell Press",
+          "strength": 2,
+          "agility": 0,
+          "endurance": 1,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Lateral Raises",
+          "strength": 1,
+          "agility": 1,
+          "endurance": 0,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Front Raises",
+          "strength": 1,
+          "agility": 0,
+          "endurance": 1,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        }
+      ]
+    },
+    {
+      "name": "Chest",
+      "exercises": [
+        {
+          "name": "Bench Press",
+          "strength": 3,
+          "agility": 0,
+          "endurance": 1,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Incline Push-ups",
+          "strength": 2,
+          "agility": 0,
+          "endurance": 2,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Chest Flys",
+          "strength": 2,
+          "agility": 0,
+          "endurance": 1,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        }
+      ]
+    },
+    {
+      "name": "Back",
+      "exercises": [
+        {
+          "name": "Pull-ups",
+          "strength": 2,
+          "agility": 1,
+          "endurance": 1,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Deadlifts",
+          "strength": 3,
+          "agility": 0,
+          "endurance": 2,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Bent-over Rows",
+          "strength": 2,
+          "agility": 0,
+          "endurance": 1,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        }
+      ]
+    },
+    {
+      "name": "Legs",
+      "exercises": [
+        {
+          "name": "Barbell Squats",
+          "strength": 3,
+          "agility": 0,
+          "endurance": 2,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Lunges",
+          "strength": 2,
+          "agility": 1,
+          "endurance": 2,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Leg Press",
+          "strength": 3,
+          "agility": 0,
+          "endurance": 1,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        }
+      ]
+    },
+    {
+      "name": "Core",
+      "exercises": [
+        {
+          "name": "Russian Twists",
+          "strength": 1,
+          "agility": 0,
+          "endurance": 2,
+          "flexibility": 1,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Hanging Leg Raises",
+          "strength": 2,
+          "agility": 0,
+          "endurance": 3,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Ab Rollouts",
+          "strength": 2,
+          "agility": 0,
+          "endurance": 2,
+          "flexibility": 1,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        }
+      ]
+    },
+    {
+      "name": "Arms",
+      "exercises": [
+        {
+          "name": "Bicep Curls",
+          "strength": 2,
+          "agility": 0,
+          "endurance": 0,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Tricep Dips",
+          "strength": 2,
+          "agility": 0,
+          "endurance": 1,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        },
+        {
+          "name": "Hammer Curls",
+          "strength": 2,
+          "agility": 0,
+          "endurance": 1,
+          "flexibility": 0,
+          "reps": 5,
+          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+        }
+      ]
+    }
+  ]
+}

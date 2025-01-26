@@ -1,0 +1,20 @@
+{
+    "450842915024142374": {
+        "level": 2,
+        "hp": 2,
+        "strength": 16,
+        "agility": 3,
+        "endurance": 22,
+        "flexibility": 4,
+        "skill": 10
+    },
+    "345994187742773248": {
+        "level": 1,
+        "hp": 2,
+        "strength": 8,
+        "agility": 2,
+        "endurance": 5,
+        "flexibility": 1,
+        "skill": 3
+    }
+}
