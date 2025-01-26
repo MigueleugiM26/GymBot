@@ -16,17 +16,18 @@ mirror.setup(tree)
 ping.setup(tree)
 sync.setup(tree)
 
+
 @client.event
 async def on_ready():
     try:
-        guild = discord.Object(id=1151266968163336273)
+        guild = discord.Object(id=1180945248013254808)
         synced = await tree.sync(guild=None)
-        print(f"Synced {len(synced)} command(s) to the guild: {1151266968163336273}.")
+        print(f"Synced {len(synced)} command(s) to the guild: {1180945248013254808}.")
     except Exception as e:
         print(f"Failed to sync commands: {e}")
 
 
-    channel = client.get_channel(1330999204910465126)
+    channel = client.get_channel(1180945248709517385)
     await channel.send("💪")
     print(f'Logged in as {client.user}')
 

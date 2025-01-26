@@ -1,28 +1,49 @@
 {
-  "450842915024142374": {
-    "level": 6,
-    "hp": 7,
-    "strength": 48,
-    "agility": 6,
-    "endurance": 39,
-    "flexibility": 13,
-    "skill": 22,
-    "hasRoutine": false,
-    "exercisesDone": 0,
-    "workoutMessageId": 1333136857055236244,
-    "groupsDone": ["Back", "Cardio", "Shoulders"]
-  },
-  "345994187742773248": {
-    "level": 1,
-    "hp": 2,
-    "strength": 8,
-    "agility": 2,
-    "endurance": 5,
-    "flexibility": 1,
-    "skill": 3,
-    "hasRoutine": false,
-    "exercisesDone": 0,
-    "workoutMessageId": "",
-    "groupsDone": []
-  }
+    "450842915024142374": {
+        "level": 6,
+        "hp": 7,
+        "strength": 48,
+        "agility": 6,
+        "endurance": 39,
+        "flexibility": 13,
+        "skill": 22,
+        "hasRoutine": true,
+        "exercisesDone": 0,
+        "workoutMessageId": 1333161645320572990,
+        "groupsDone": [
+            "Back",
+            "Cardio",
+            "Shoulders",
+            "Arms",
+            "Chest"
+        ]
+    },
+    "345994187742773248": {
+        "level": 1,
+        "hp": 2,
+        "strength": 8,
+        "agility": 2,
+        "endurance": 5,
+        "flexibility": 1,
+        "skill": 3,
+        "hasRoutine": false,
+        "exercisesDone": 0,
+        "workoutMessageId": "",
+        "groupsDone": []
+    },
+    "390836821723971594": {
+        "level": 1,
+        "hp": 2,
+        "strength": 3,
+        "agility": 0,
+        "endurance": 4,
+        "flexibility": 0,
+        "skill": 2,
+        "hasRoutine": true,
+        "exercisesDone": 2,
+        "workoutMessageId": 1333155609033310259,
+        "groupsDone": [
+            "Full Body"
+        ]
+    }
 }

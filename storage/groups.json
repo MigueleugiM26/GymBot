@@ -10,7 +10,7 @@
           "endurance": 1,
           "flexibility": 0,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/HmrFABSM42sAAAAd/push-up-workout.gif"
         },
         {
           "name": "Squats",
@@ -19,7 +19,7 @@
           "endurance": 1,
           "flexibility": 1,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/1NY6qOs30XIAAAAd/goblet-squad.gif"
         },
         {
           "name": "Plank",
@@ -27,8 +27,8 @@
           "agility": 0,
           "endurance": 3,
           "flexibility": 0,
-          "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "reps": 30,
+          "gif": "https://media1.tenor.com/m/Ww5Ytjlx4QwAAAAd/prancha-treino-mestre.gif"
         }
       ]
     },
@@ -42,7 +42,7 @@
           "endurance": 2,
           "flexibility": 0,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/uAtJlrhNoWQAAAAd/burpees-stephen-farrelly.gif"
         },
         {
           "name": "Jumping Jacks",
@@ -51,7 +51,7 @@
           "endurance": 1,
           "flexibility": 1,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/9YRh0wV0VosAAAAd/exercise-workout.gif"
         },
         {
           "name": "Sit-ups",
@@ -60,7 +60,7 @@
           "endurance": 2,
           "flexibility": 0,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/LQM4dusN5VIAAAAd/kettlebell-situps.gif"
         }
       ]
     },
@@ -74,7 +74,7 @@
           "endurance": 1,
           "flexibility": 0,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/9LkujMB7lc8AAAAd/5dumbbell-shoulders-press.gif"
         },
         {
           "name": "Lateral Raises",
@@ -83,7 +83,7 @@
           "endurance": 0,
           "flexibility": 1,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/VdCASDhF7NMAAAAd/lateral-raise.gif"
         },
         {
           "name": "Front Raises",
@@ -92,7 +92,7 @@
           "endurance": 1,
           "flexibility": 1,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/8LnHIE_G8LcAAAAd/prezentace.gif"
         }
       ]
     },
@@ -106,7 +106,7 @@
           "endurance": 1,
           "flexibility": 0,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/1M8FYdb7vd4AAAAd/workout-gym.gif"
         },
         {
           "name": "Incline Push-ups",
@@ -115,16 +115,16 @@
           "endurance": 2,
           "flexibility": 0,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/OB-awnwShFMAAAAd/incline-push-ups.gif"
         },
         {
-          "name": "Chest Flys",
+          "name": "Dumbbell Flys",
           "strength": 1,
           "agility": 0,
           "endurance": 1,
           "flexibility": 1,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/aeiQWNFbCL8AAAAd/chest-fly-dumbells.gif"
         }
       ]
     },
@@ -138,7 +138,7 @@
           "endurance": 1,
           "flexibility": 0,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/G-a7AMKpQugAAAAd/pull-ups-nigel-sylvester.gif"
         },
         {
           "name": "Deadlifts",
@@ -147,7 +147,7 @@
           "endurance": 1,
           "flexibility": 0,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/NgtmNzYYAzYAAAAd/deadlift-james-smith.gif"
         },
         {
           "name": "Bent-over Rows",
@@ -156,7 +156,7 @@
           "endurance": 1,
           "flexibility": 1,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/oGaZzkaXnSIAAAAd/db-tripod-row.gif"
         }
       ]
     },
@@ -170,7 +170,7 @@
           "endurance": 2,
           "flexibility": 0,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/lIUdDtsYRxsAAAAd/high-bar.gif"
         },
         {
           "name": "Lunges",
@@ -179,7 +179,7 @@
           "endurance": 1,
           "flexibility": 1,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/N15GUJ5GsAsAAAAd/shohei-ohtani-%E5%A4%A7%E8%B0%B7%E7%BF%94%E5%B9%B3.gif"
         },
         {
           "name": "Leg Press",
@@ -188,7 +188,7 @@
           "endurance": 1,
           "flexibility": 0,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/HSQb1EjWC70AAAAd/legpress-treino-mestre.gif"
         }
       ]
     },
@@ -202,7 +202,7 @@
           "endurance": 2,
           "flexibility": 2,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/OLwm7qK98FgAAAAd/russiantwist-core.gif"
         },
         {
           "name": "Hanging Leg Raises",
@@ -211,7 +211,7 @@
           "endurance": 3,
           "flexibility": 2,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/LuTjJGyFOoUAAAAd/hanging-leg-raise.gif"
         },
         {
           "name": "Ab Rollouts",
@@ -220,7 +220,7 @@
           "endurance": 2,
           "flexibility": 1,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/_5K8Xs60c5AAAAAd/boxing-fitness.gif"
         }
       ]
     },
@@ -234,7 +234,7 @@
           "endurance": 0,
           "flexibility": 0,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/6uinYQq-1TYAAAAd/biceps-curl.gif"
         },
         {
           "name": "Tricep Dips",
@@ -243,7 +243,7 @@
           "endurance": 1,
           "flexibility": 1,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/Aq6euho3C5wAAAAd/dip-workout.gif"
         },
         {
           "name": "Hammer Curls",
@@ -252,7 +252,7 @@
           "endurance": 1,
           "flexibility": 0,
           "reps": 5,
-          "gif": "https://media1.tenor.com/m/vCVl6-H09WAAAAAd/its-almost-time-to-go-the-gym.gif"
+          "gif": "https://media1.tenor.com/m/bD-xqk220MMAAAAd/miodek.gif"
         }
       ]
     }

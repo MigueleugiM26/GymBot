@@ -66,7 +66,7 @@ class ExerciseView(View):
             self.reps_done[exercise_name] = 0  
 
             embed = discord.Embed(title=exercise_name, description="", color=discord.Color.dark_gold())
-            embed.add_field(name="Repetitions", value=f"0/{total_reps}")
+            embed.add_field(name="Repetitions (or seconds)", value=f"0/{total_reps}")
             embed.set_image(url=exercise_gif)
 
             btnMinusReps = Button(label="[-]", style=discord.ButtonStyle.red, disabled=True)
@@ -100,7 +100,7 @@ class ExerciseView(View):
         current_reps = self.reps_done[exercise_name]
 
         embed = discord.Embed(title=exercise_name, description="", color=discord.Color.dark_gold())
-        embed.add_field(name="Repetitions", value=f"{current_reps}/{total_reps}")
+        embed.add_field(name="Repetitions (or seconds)", value=f"{current_reps}/{total_reps}")
         embed.set_image(url=self.exercises[0]["gif"])
 
         btnMinusReps = Button(label="[-]", style=discord.ButtonStyle.red, disabled=current_reps <= 0)
@@ -208,8 +208,9 @@ def get_random_exercise_set(interaction, groups_data, user_data):
 
 @command(name="workout", description="A set of exercises")
 async def workout(interaction: Interaction):
-    user_data = load_user_data() 
     user_id = str(interaction.user.id) 
+    get_user_entry(user_id)
+    user_data = load_user_data() 
     user_entry = user_data.get(user_id)
     
     if user_entry["hasRoutine"]:
