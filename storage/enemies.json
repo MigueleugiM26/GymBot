@@ -1,0 +1,12 @@
+{
+  "Goblin": {
+    "hp": 3,
+    "attack": 1,
+    "defense": 2,
+    "precision": 5,
+    "level": 1,
+    "loot": {
+      "currency": 5
+    }
+  }
+}

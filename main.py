@@ -19,14 +19,14 @@ sync.setup(tree)
 @client.event
 async def on_ready():
     try:
-        guild = discord.Object(id=1180945248013254808)
+        guild = discord.Object(id=1151266968163336273)
         synced = await tree.sync(guild=None)
-        print(f"Synced {len(synced)} command(s) to the guild: {1180945248013254808}.")
+        print(f"Synced {len(synced)} command(s) to the guild: {1151266968163336273}.")
     except Exception as e:
         print(f"Failed to sync commands: {e}")
 
 
-    channel = client.get_channel(1180945248709517385)
+    channel = client.get_channel(1330999204910465126)
     await channel.send("💪")
     print(f'Logged in as {client.user}')
 

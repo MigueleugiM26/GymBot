@@ -36,8 +36,9 @@ def get_user_entry(user_id):
             "flexibility": 1,
             "skill": 0,
             "hasRoutine": False,
-            "hasWorkedOut": False,
-            "workoutMessageId": ""
+            "workoutMessageId": "",
+            "exercisesDone": 0,
+            "groupsDone": []
         }
         save_user_data(user_data)  
     return user_data[user_id]
@@ -64,7 +65,7 @@ class ExerciseView(View):
             total_reps = random_factor * reps
             self.reps_done[exercise_name] = 0  
 
-            embed = discord.Embed(title=exercise_name, description="")
+            embed = discord.Embed(title=exercise_name, description="", color=discord.Color.dark_gold())
             embed.add_field(name="Repetitions", value=f"0/{total_reps}")
             embed.set_image(url=exercise_gif)
 
@@ -98,7 +99,7 @@ class ExerciseView(View):
 
         current_reps = self.reps_done[exercise_name]
 
-        embed = discord.Embed(title=exercise_name, description="")
+        embed = discord.Embed(title=exercise_name, description="", color=discord.Color.dark_gold())
         embed.add_field(name="Repetitions", value=f"{current_reps}/{total_reps}")
         embed.set_image(url=self.exercises[0]["gif"])
 
@@ -120,8 +121,13 @@ class ExerciseView(View):
     async def finish_exercise_callback(self, interaction: discord.Interaction, exercise_name: str, button: Button):
         exercise_stats = self.get_exercise_stats(exercise_name)
         button.disabled = True
+        self.user_entry["exercisesDone"] += 1
 
-        embed = discord.Embed(title=f"Great job, {interaction.user.display_name}! You've completed {exercise_name}. Keep going! 💪")
+        if self.user_entry["exercisesDone"] >= len(self.exercises): 
+            embed = discord.Embed(title=f"Great job, {interaction.user.display_name}! You've completed {exercise_name}.\nYou have finished your exercises for today! Rest well! 💪", color=discord.Color.blurple())
+        else:
+            embed = discord.Embed(title=f"Great job, {interaction.user.display_name}! You've completed {exercise_name}. Keep going! 💪", color=discord.Color.blurple())
+
         embed.add_field(name="Skill", value=f"+1", inline=True)
         embed.add_field(name="Strength", value=f"+{exercise_stats["strength"]}", inline=True)
         embed.add_field(name="Agility", value=f"+{exercise_stats["agility"]}", inline=True)
@@ -167,14 +173,38 @@ class ExerciseView(View):
             self.user_entry["level"] += 1
             self.user_entry["hp"] += 1
 
+            embed = discord.Embed(title=f"Congratulations, {interaction.user.display_name}! You leveled up to level {self.user_entry['level']}!", color=discord.Color.red())
+            embed.add_field(name="HP", value="+1", inline=True)
+
             await interaction.channel.send(
-            f"Congratulations, {interaction.user.display_name}! You leveled up to level {self.user_entry['level']}!\n+1 HP!"
+            embed=embed
             )
 
         if self.user_entry["level"] > len(xp_data):
             self.user_entry["level"] = len(xp_data)
             self.user_entry["hp"] -= 1
             
+
+def get_random_exercise_set(interaction, groups_data, user_data):
+    user_id = str(interaction.user.id)
+
+    if user_id not in user_data:
+        user_data[user_id] = {"groupsDone": []}
+
+    groupsDone = user_data[user_id]["groupsDone"]
+
+    available_groups = [group for group in groups_data["groups"] if group["name"] not in groupsDone]
+
+    if not available_groups:
+        user_data[user_id]["groupsDone"] = []
+        available_groups = groups_data["groups"]
+
+    random_set = random.choice(available_groups)
+
+    user_data[user_id]["groupsDone"].append(random_set["name"])
+
+    return random_set
+
 
 @command(name="workout", description="A set of exercises")
 async def workout(interaction: Interaction):
@@ -201,15 +231,20 @@ async def workout(interaction: Interaction):
 
         return
 
-    random_set = random.choice(groups_data["groups"])
+    random_set = get_random_exercise_set(interaction, groups_data, user_data)
     exercises = random_set["exercises"]
 
     view = ExerciseView(exercises, user_entry)  
     exercises_list = "\n-".join([exercise["name"] for exercise in exercises])
 
+    embed = discord.Embed(title=f"{interaction.user.display_name}, today, you will work out your **{random_set['name']}**!", color=discord.Color.dark_gold())
+    embed.add_field(name="Exercises:", value=f"-{exercises_list}", inline=True)
+    embed.set_footer(text="Click the buttons below for each exercise!")
+
     await interaction.response.defer()
     workout_message: Message = await interaction.followup.send(
-        f"{interaction.user.mention}, today, you will work out your **{random_set['name']}**!\n\nExercises:\n-{exercises_list}\n\nClick the buttons below for each exercise!",
+        content=f"{interaction.user.mention}",  
+        embed=embed,
         view=view
     )
 
