@@ -10,6 +10,10 @@ from functools import partial
 with open("storage/groups.json", "r") as file:
     groups_data = json.load(file)
 
+def load_xp_data():
+    with open("storage/levelTable.json", "r") as file:
+        return json.load(file)
+    
 def load_user_data():
     with open("storage/users.json", "r") as file:
         return json.load(file)
@@ -115,15 +119,21 @@ class ExerciseView(View):
     
     async def finish_exercise_callback(self, interaction: discord.Interaction, exercise_name: str, button: Button):
         exercise_stats = self.get_exercise_stats(exercise_name)
-        self.apply_exercise_stats(exercise_stats)
         button.disabled = True
 
-        embed = discord.Embed(title=f"Great job! You've completed {exercise_name}. Keep going! 💪")
+        embed = discord.Embed(title=f"Great job, {interaction.user.display_name}! You've completed {exercise_name}. Keep going! 💪")
+        embed.add_field(name="Skill", value=f"+1", inline=True)
+        embed.add_field(name="Strength", value=f"+{exercise_stats["strength"]}", inline=True)
+        embed.add_field(name="Agility", value=f"+{exercise_stats["agility"]}", inline=True)
+        embed.add_field(name="Endurance", value=f"+{exercise_stats["endurance"]}", inline=True)
+        embed.add_field(name="Flexibility", value=f"+{exercise_stats["flexibility"]}", inline=True)
         embed.set_image(url=None)
         await interaction.response.edit_message(
             embed=embed,
             view=None
         )
+
+        await self.apply_exercise_stats(exercise_stats, interaction)
 
         user_data = load_user_data()
         user_id = str(interaction.user.id) 
@@ -137,14 +147,33 @@ class ExerciseView(View):
                 return {"strength": exercise["strength"], "agility": exercise["agility"], "endurance": exercise["endurance"], "flexibility": exercise["flexibility"]}
         return {"strength": 0, "agility": 0, "endurance": 0, "flexibility": 0}  
 
-    def apply_exercise_stats(self, stats):
+    async def apply_exercise_stats(self, stats, interaction):
         for stat, value in stats.items():
             if stat == "name": 
                 break
             self.user_entry[stat] += value
-            
+
         self.user_entry["skill"] += 1
-        self.user_entry["level"] = int(1 + (self.user_entry["skill"] ** 1.2) / 10)
+        xp_data = load_xp_data()
+        current_xp = self.user_entry["skill"]
+        current_level = self.user_entry["level"]
+        next_level_xp = xp_data.get(str(current_level + 1), None)
+
+        if next_level_xp is None:
+            return
+        
+        if current_xp >= next_level_xp:
+            self.user_entry["level"] += 1
+            self.user_entry["hp"] += 1
+
+            await interaction.channel.send(
+            f"Congratulations, {interaction.user.display_name}! You leveled up to level {self.user_entry['level']}!\n+1 HP!"
+            )
+
+        if self.user_entry["level"] > len(xp_data):
+            self.user_entry["level"] = len(xp_data)
+            self.user_entry["hp"] -= 1
+            
 
 @command(name="workout", description="A set of exercises")
 async def workout(interaction: Interaction):
