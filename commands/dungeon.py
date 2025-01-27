@@ -148,8 +148,8 @@ class PlayerView(View):
 
     @discord.ui.button(label="Punch", style=discord.ButtonStyle.danger)
     async def attack_button(self, interaction: discord.Interaction, button: Button):
-        evasionChance = 50 + (self.user_entry["agility"] - self.enemy_stats["evasion"])
-        evasionChance = max(0, min(50, evasionChance))
+        evasionChance = 5 + (self.user_entry["agility"] - self.enemy_stats["evasion"])
+        evasionChance = max(5, min(50, evasionChance))
 
         randomRoll = random.randint(0, 100)
 
@@ -161,7 +161,7 @@ class PlayerView(View):
             view = EnemyView(self.user_entry, self.enemy_name, self.enemy_stats, self.interaction)
             await interaction.message.edit(embed=embed, view=view)
         else:
-            baseDamage = int(self.user_entry['strength'] - ((self.enemy_stats["defense"] * random.randint(1, 3)) / 2))
+            baseDamage = self.user_entry['strength'] - ((self.enemy_stats["defense"] * random.randint(1, 3)) / 2)
             baseDamage = max(1, baseDamage)  
 
             self.enemy_stats["hp"] -= baseDamage
