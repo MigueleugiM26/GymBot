@@ -9,10 +9,12 @@ from commands.globalFunctions import load_user_data, save_user_data
 with open("storage/enemies.json", "r") as file:
     enemies_data = json.load(file)
 
-def generate_health_bar(current_hp, max_hp, bar_length=10):
-    filled_length = int(bar_length * current_hp / max_hp)
+
+def generate_health_bar(current_hp, bar_length=10):
+    filled_length = round(bar_length * current_hp / max_hp) 
     empty_length = bar_length - filled_length
-    return "🟥" * filled_length + "⬜" * empty_length
+    return "🟥" * filled_length + "⬛" * empty_length
+
 
 class EnemyView(View):
     def __init__(self, user_entry, enemy_name, enemy_stats, interaction):
@@ -30,7 +32,7 @@ class EnemyView(View):
         randomRoll = random.randint(0, 100)
 
         if randomRoll <= evasionChance:
-            health_bar = generate_health_bar(self.user_entry["hp"], self.user_entry["hp"])
+            health_bar = generate_health_bar(self.user_entry["hp"])
 
             embed = discord.Embed(
                 title=f"{interaction.user.display_name} vs **{self.enemy_name}**",
@@ -63,7 +65,7 @@ class EnemyView(View):
                 embed.add_field(name="", value=f"You have fallen! The gym quickly calls an ambulance!")
                 await interaction.message.edit(embed=embed, view=None)
             else:
-                health_bar = generate_health_bar(self.user_entry["hp"], self.user_entry["hp"])
+                health_bar = generate_health_bar(self.user_entry["hp"])
 
                 embed = discord.Embed(
                     title=f"{interaction.user.display_name} vs **{self.enemy_name}**",
@@ -131,7 +133,7 @@ class PlayerView(View):
                     title=f"You punch the **{self.enemy_name}**!"
                 )
                 embed.add_field(name="", value=f"You deal {baseDamage} damage!")
-                embed.add_field(name="", value=f"It's {self.enemy_name}'s turn!")
+                embed.add_field(name="", value=f"It's the {self.enemy_name}'s turn!")
                 view = EnemyView(self.user_entry, self.enemy_name, self.enemy_stats, self.interaction)
                 await interaction.message.edit(embed=embed, view=view)
 
@@ -142,7 +144,7 @@ class PlayerView(View):
     async def skills_button(self, interaction: discord.Interaction, button: Button):
         await interaction.response.send_message(f"You prepare a skill against the **{self.enemy_name}**!", ephemeral=True)
 
-    @discord.ui.button(label="Inventory", style=discord.ButtonStyle.secondary)
+    @discord.ui.button(label="Inventory", style=discord.ButtonStyle.green)
     async def inventory_button(self, interaction: discord.Interaction, button: Button):
         await interaction.response.send_message("You check your inventory.", ephemeral=True)
 
@@ -177,7 +179,9 @@ async def dungeon(interaction, level: int):
     level_enemies = enemies_data[str(level)]
     enemy_name, enemy_stats = random.choice(list(level_enemies.items()))  
 
-    health_bar = generate_health_bar(user_entry["hp"], user_entry["hp"])
+    global max_hp
+    max_hp = user_entry["hp"]
+    health_bar = generate_health_bar(user_entry["hp"])
 
     embed = discord.Embed(
         title=f"{interaction.user.display_name}, you encounter a **{enemy_name}**!",
