@@ -56,8 +56,8 @@ class EnemyView(View):
 
     @discord.ui.button(label="Continue", style=discord.ButtonStyle.danger)
     async def continue_button(self, interaction: discord.Interaction, button: Button):
-        evasionChance = 50 + (self.enemy_stats["precision"] - self.user_entry["flexibility"])
-        evasionChance = max(0, min(50, evasionChance))
+        evasionChance = 5 + (self.enemy_stats["precision"] - self.user_entry["flexibility"])
+        evasionChance = max(5, min(50, evasionChance))
 
         randomRoll = random.randint(0, 100)
 

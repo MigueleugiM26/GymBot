@@ -1,16 +1,16 @@
 {
   "450842915024142374": {
-    "level": 6,
-    "hp": 7,
-    "strength": 0,
-    "agility": 10,
-    "endurance": 43,
-    "flexibility": 14,
-    "skill": 25,
+    "level": 7,
+    "hp": 8,
+    "strength": 7,
+    "agility": 11,
+    "endurance": 46,
+    "flexibility": 15,
+    "skill": 28,
     "hasRoutine": true,
-    "exercisesDone": 0,
-    "workoutMessageId": 1333254154856042618,
-    "groupsDone": ["Full Body"]
+    "exercisesDone": 3,
+    "workoutMessageId": 1333260405916831805,
+    "groupsDone": ["Full Body", "Back"]
   },
   "345994187742773248": {
     "level": 1,
