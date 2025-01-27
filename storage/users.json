@@ -17,11 +17,11 @@
         "inventory": {
             "gold": [
                 "g",
-                57
+                72
             ],
             "small energy bar": [
                 "c",
-                5
+                6
             ],
             "small protein shake": [
                 "c",
@@ -70,6 +70,14 @@
             "5kgs dumbbell": [
                 "e",
                 "+4 strength"
+            ],
+            "orc tooth": [
+                "s",
+                1
+            ],
+            "bone": [
+                "s",
+                2
             ]
         }
     },

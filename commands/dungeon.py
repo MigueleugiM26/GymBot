@@ -33,6 +33,7 @@ class ReviveView(View):
             description=f"{interaction.user.display_name} won't go down!",
             color=discord.Color.red()
         )
+        embed.set_thumbnail(url=self.enemy_stats["image"])
         embed.add_field(name="Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
         embed.add_field(
         name="",
@@ -72,6 +73,7 @@ class EnemyView(View):
                 description=f"",
                 color=discord.Color.red()
             )
+            embed.set_thumbnail(url=self.enemy_stats["image"])
             embed.add_field(name=f"You dodged the **{self.enemy_name}**'s attack!", value=f"It's your turn", inline=False)
             embed.add_field(name=f"Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
             embed.add_field(
@@ -87,6 +89,11 @@ class EnemyView(View):
             await interaction.message.edit(embed=embed, view=view)
         else:
             baseDamage = self.enemy_stats["attack"]
+            critical = False
+
+            if random.randint(0, 100) <= 5:
+                baseDamage = baseDamage * 2
+                critical = True
 
             self.user_entry["hp"] -= baseDamage
 
@@ -101,7 +108,11 @@ class EnemyView(View):
                     embed = discord.Embed (
                         title=f"The **{self.enemy_name}** has attacked you!"
                     )
-                    embed.add_field(name="", value=f"You suffer {baseDamage} damage!", inline=False)
+                    embed.set_thumbnail(url=self.enemy_stats["image"])
+                    if critical:
+                        embed.add_field(name="", value=f"**Critical hit!** You suffer {baseDamage} damage!", inline=False)
+                    else:
+                        embed.add_field(name="", value=f"You suffer {baseDamage} damage!", inline=False)
                     embed.add_field(name="", value=f"The **{self.enemy_name}** has knocked you down, but your muscles won't give up! You recover 1 HP!", inline=False)
                     view = ReviveView(self.user_entry, self.enemy_name, self.enemy_stats, self.interaction)
                     await interaction.message.edit(embed=embed, view=view)
@@ -109,7 +120,11 @@ class EnemyView(View):
                     embed = discord.Embed (
                         title=f"The **{self.enemy_name}** has attacked you!"
                     )
-                    embed.add_field(name="", value=f"You suffer {baseDamage} damage!", inline=False)
+                    embed.set_thumbnail(url=self.enemy_stats["image"])
+                    if critical:
+                        embed.add_field(name="", value=f"**Critical hit!** You suffer {baseDamage} damage!", inline=False)
+                    else:
+                        embed.add_field(name="", value=f"You suffer {baseDamage} damage!", inline=False)
                     embed.add_field(name="", value=f"You have fallen! The gym quickly calls an ambulance!", inline=False)
                     await interaction.message.edit(embed=embed, view=None)
             else:
@@ -120,6 +135,7 @@ class EnemyView(View):
                     description=f"",
                     color=discord.Color.red()
                 )
+                embed.set_thumbnail(url=self.enemy_stats["image"])
                 embed.add_field(name=f"The **{self.enemy_name}** has attacked you!", value=f"You suffer {baseDamage} damage!", inline=False)
                 embed.add_field(name=f"Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
                 embed.add_field(
@@ -158,12 +174,18 @@ class PlayerView(View):
             embed = discord.Embed (
                 title=f"The **{self.enemy_name}** dodged your punch!"
             )
+            embed.set_thumbnail(url=self.enemy_stats["image"])
             embed.add_field(name="", value=f"It's the {self.enemy_name}'s turn!")
             view = EnemyView(self.user_entry, self.enemy_name, self.enemy_stats, self.interaction)
             await interaction.message.edit(embed=embed, view=view)
         else:
             baseDamage = self.user_entry['strength'] - ((self.enemy_stats["defense"] * random.randint(1, 3)) / 2)
             baseDamage = max(1, baseDamage)  
+            critical = False
+
+            if random.randint(0, 100) <= 5:
+                baseDamage += 25 * baseDamage /100
+                critical = True
 
             self.enemy_stats["hp"] -= baseDamage
 
@@ -172,7 +194,12 @@ class PlayerView(View):
                     title=f"You punch the **{self.enemy_name}**!",
                     color=discord.Color.green()
                 )
-                embed.add_field(name="", value=f"You deal {baseDamage} damage!", inline=False)
+                embed.set_thumbnail(url=self.enemy_stats["image"])
+                if critical:
+                    embed.add_field(name="", value=f"**Critical hit!** You deal {baseDamage} damage!", inline=False)
+                else:
+                    embed.add_field(name="", value=f"You deal {baseDamage} damage!", inline=False)
+                
                 embed.add_field(name="", value=f"The {self.enemy_name} has been defeated!", inline=False)
 
                 loot = self.enemy_stats.get("loot", {})
@@ -203,7 +230,11 @@ class PlayerView(View):
                 embed = discord.Embed (
                     title=f"You punch the **{self.enemy_name}**!"
                 )
-                embed.add_field(name="", value=f"You deal {baseDamage} damage!", inline=False)
+                embed.set_thumbnail(url=self.enemy_stats["image"])
+                if critical:
+                    embed.add_field(name="", value=f"**Critical hit!** You deal {baseDamage} damage!", inline=False)
+                else:
+                    embed.add_field(name="", value=f"You deal {baseDamage} damage!", inline=False)
                 embed.add_field(name="", value=f"It's the {self.enemy_name}'s turn!", inline=False)
                 view = EnemyView(self.user_entry, self.enemy_name, self.enemy_stats, self.interaction)
                 await interaction.message.edit(embed=embed, view=view)
@@ -259,6 +290,7 @@ async def dungeon(interaction, level: int):
         description=f"",
         color=discord.Color.red()
     )
+    embed.set_thumbnail(url=enemy_stats["image"])
     embed.add_field(name="Your stats:", value=f"**HP**: {user_entry['hp']} {health_bar}", inline=False)
     embed.add_field(
     name="",
