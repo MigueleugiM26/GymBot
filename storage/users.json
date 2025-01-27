@@ -12,13 +12,9 @@
     "workoutMessageId": 1333260405916831805,
     "groupsDone": ["Full Body", "Back"],
     "inventory": {
-      "gold": ["g", 117],
-      "goo": ["s", 4],
-      "bone": ["s", 3],
-      "flesh": ["s", 7],
-      "goblin ear": ["s", 1],
-      "orc tooth": ["s", 2],
-      "small energy bar": ["c", 1]
+      "gold": ["g", 179],
+      "small energy bar": ["c", 1],
+      "small protein shake": ["c", 1]
     }
   },
   "345994187742773248": {

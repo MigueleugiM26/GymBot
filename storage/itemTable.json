@@ -1,14 +1,14 @@
 {
   "goblin ear": {
-    "value": 8,
+    "value": 5,
     "description": "Can be sold for a bit of gold."
   },
   "bone": {
-    "value": 4,
+    "value": 3,
     "description": "Can be sold for a bit of gold."
   },
   "flesh": {
-    "value": 5,
+    "value": 3,
     "description": "Can be sold for a bit of gold."
   },
   "goo": {
@@ -16,7 +16,7 @@
     "description": "Can be sold for a bit of gold."
   },
   "orc tooth": {
-    "value": 17,
+    "value": 9,
     "description": "Can be sold for a bit of gold."
   }
 }

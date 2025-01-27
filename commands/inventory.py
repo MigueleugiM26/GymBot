@@ -19,6 +19,7 @@ async def inventory(interaction):
     gold = inventory.get("gold", [None, 0])[1] 
 
     consumables = {}
+    equipment = {}
     sellables = {}
 
     for item, details in inventory.items():
@@ -26,6 +27,8 @@ async def inventory(interaction):
             item_type, quantity = details
             if item_type == "c":  # Consumables
                 consumables[item] = quantity
+            elif item_type == "e":  # Equipment
+                equipment[item] = quantity
             elif item_type == "s":  # Sellables
                 sellables[item] = quantity
 
@@ -44,6 +47,15 @@ async def inventory(interaction):
         embed.add_field(name="Consumables", value="You have no consumables!", inline=False)
 
     embed.add_field(name="\u200b", value="", inline=False) # spacing
+
+    if equipment:
+        equipment_text = "\n".join([f"**{item.title()}**: {quantity}" for item, quantity in equipment.items()])
+        embed.add_field(name="Equipment", value=equipment_text, inline=False)
+    else:
+        embed.add_field(name="Equipment", value="You have no Equipment!", inline=False)
+
+    embed.add_field(name="\u200b", value="", inline=False) # spacing
+
     if sellables:
         sellables_text = "\n".join([f"**{item.title()}**: {quantity}" for item, quantity in sellables.items()])
         embed.add_field(name="Sellables", value=sellables_text, inline=False)
