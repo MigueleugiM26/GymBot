@@ -36,7 +36,8 @@ def get_user_entry(user_id):
             "hasRoutine": False,
             "workoutMessageId": "",
             "exercisesDone": 0,
-            "groupsDone": []
+            "groupsDone": [],
+            "inventory": {}
         }
         save_user_data(user_data)  
     return user_data[user_id]

@@ -7,7 +7,9 @@
       "precision": 6,
       "evasion": 4,
       "loot": {
-        "gold": 5
+        "gold": ["g", 100, 5],
+        "goblin ear": ["s", 30, 1],
+        "small healing potion": ["c", 12, 1]
       }
     },
     "Skeleton": {
@@ -17,7 +19,9 @@
       "precision": 8,
       "evasion": 6,
       "loot": {
-        "gold": 6
+        "gold": ["g", 100, 6],
+        "bone": ["s", 30, 3],
+        "small healing potion": ["c", 6, 1]
       }
     },
     "Zombie": {
@@ -27,7 +31,9 @@
       "precision": 4,
       "evasion": 1,
       "loot": {
-        "gold": 3
+        "gold": ["g", 100, 3],
+        "flesh": ["s", 30, 2],
+        "small healing potion": ["c", 8, 1]
       }
     },
     "Slime": {
@@ -37,7 +43,9 @@
       "precision": 2,
       "evasion": 1,
       "loot": {
-        "gold": 4
+        "gold": ["g", 100, 4],
+        "goo": ["s", 30, 5],
+        "small healing potion": ["c", 2, 1]
       }
     },
     "Orc": {
@@ -47,7 +55,9 @@
       "precision": 5,
       "evasion": 3,
       "loot": {
-        "gold": 7
+        "gold": ["g", 100, 7],
+        "orc tooth": ["s", 15, 1],
+        "small healing potion": ["c", 10, 1]
       }
     }
   }

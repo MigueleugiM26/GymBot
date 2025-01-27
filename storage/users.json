@@ -10,7 +10,16 @@
     "hasRoutine": true,
     "exercisesDone": 3,
     "workoutMessageId": 1333260405916831805,
-    "groupsDone": ["Full Body", "Back"]
+    "groupsDone": ["Full Body", "Back"],
+    "inventory": {
+      "gold": ["g", 117],
+      "goo": ["s", 4],
+      "bone": ["s", 3],
+      "flesh": ["s", 7],
+      "goblin ear": ["s", 1],
+      "orc tooth": ["s", 2],
+      "small healing potion": ["c", 1]
+    }
   },
   "345994187742773248": {
     "level": 1,
@@ -23,7 +32,8 @@
     "hasRoutine": false,
     "exercisesDone": 0,
     "workoutMessageId": "",
-    "groupsDone": []
+    "groupsDone": [],
+    "inventory": {}
   },
   "390836821723971594": {
     "level": 1,
@@ -36,7 +46,8 @@
     "hasRoutine": false,
     "exercisesDone": 0,
     "workoutMessageId": 1333155609033310259,
-    "groupsDone": ["Full Body"]
+    "groupsDone": ["Full Body"],
+    "inventory": {}
   },
   "1320866560663097517": {
     "level": 1,
@@ -49,6 +60,7 @@
     "hasRoutine": false,
     "workoutMessageId": 1333172673018335256,
     "exercisesDone": 0,
-    "groupsDone": ["Back"]
+    "groupsDone": ["Back"],
+    "inventory": {}
   }
 }

@@ -7,6 +7,8 @@ from apscheduler.triggers.cron import CronTrigger
 from commands import workout
 from commands import dungeon
 from commands import mirror
+from commands import inventory
+from commands import shop
 
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
@@ -15,6 +17,8 @@ tree = app_commands.CommandTree(client)
 workout.setup(tree)
 dungeon.setup(tree)
 mirror.setup(tree)
+inventory.setup(tree)
+shop.setup(tree)
 
     
 def reset_daily_stats():

@@ -169,10 +169,35 @@ class PlayerView(View):
 
             if self.enemy_stats["hp"] <= 0:
                 embed = discord.Embed (
-                    title=f"You punch the **{self.enemy_name}**!"
+                    title=f"You punch the **{self.enemy_name}**!",
+                    color=discord.Color.green()
                 )
-                embed.add_field(name="", value=f"You deal {baseDamage} damage!")
-                embed.add_field(name="", value=f"The {self.enemy_name} has been defeated!")
+                embed.add_field(name="", value=f"You deal {baseDamage} damage!", inline=False)
+                embed.add_field(name="", value=f"The {self.enemy_name} has been defeated!", inline=False)
+
+                loot = self.enemy_stats.get("loot", {})
+                player_inventory = self.user_entry.setdefault("inventory", {})
+                loot_messages = []
+
+                for item, (type, chance, value) in loot.items():
+                    if random.randint(1, 100) <= chance: 
+                        item_dropped = max(1, random.randint(value // 2, value))
+                        if item not in player_inventory:
+                            player_inventory[item] = [type, item_dropped]
+                        else:
+                            player_inventory[item][1] += item_dropped
+                        loot_messages.append(f"You found {item_dropped} {item}!")
+
+                if loot_messages:
+                    embed.add_field(name="Loot", value="\n".join(loot_messages), inline=False)
+                else:
+                    embed.add_field(name="Loot", value="You found nothing!", inline=False)
+
+                user_data = load_user_data()
+                user_id = str(interaction.user.id) 
+                user_data[user_id].setdefault("inventory", {}).update(self.user_entry.get("inventory", {}))
+                save_user_data(user_data)
+
                 await interaction.message.edit(embed=embed, view=None)
             else:
                 embed = discord.Embed (
