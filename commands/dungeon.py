@@ -44,7 +44,10 @@ class ReviveView(View):
         )
 
         view = PlayerView(self.user_entry, self.enemy_name, self.enemy_stats, interaction)
-        await interaction.response.send_message(embed=embed, view=view)
+        await interaction.message.edit(embed=embed, view=view)
+        
+        if not interaction.response.is_done():
+            await interaction.response.defer()
 
 class EnemyView(View):
     def __init__(self, user_entry, enemy_name, enemy_stats, interaction):
@@ -130,8 +133,6 @@ class EnemyView(View):
 
                 view = PlayerView(self.user_entry, self.enemy_name, self.enemy_stats, self.interaction)
                 await interaction.message.edit(embed=embed, view=view)
-
-        
 
 
         if not interaction.response.is_done():
