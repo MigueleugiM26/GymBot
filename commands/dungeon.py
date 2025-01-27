@@ -16,6 +16,36 @@ def generate_health_bar(current_hp, bar_length=10):
     return "🟥" * filled_length + "⬛" * empty_length
 
 
+class ReviveView(View):
+    def __init__(self, user_entry, enemy_name, enemy_stats, interaction):
+        super().__init__()
+        self.user_entry = user_entry
+        self.enemy_name = enemy_name
+        self.enemy_stats = enemy_stats
+        self.interaction = interaction
+
+    @discord.ui.button(label="Continue", style=discord.ButtonStyle.danger)
+    async def continue_button(self, interaction: discord.Interaction, button: Button):
+        health_bar = generate_health_bar(self.user_entry["hp"])
+
+        embed = discord.Embed(
+            title=f"{interaction.user.display_name} vs **{self.enemy_name}**",
+            description=f"{interaction.user.display_name} won't go down!",
+            color=discord.Color.red()
+        )
+        embed.add_field(name="Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
+        embed.add_field(
+        name="",
+        value=(
+            f"**Strength**: {self.user_entry['strength']}  |  **Agility**: {self.user_entry['agility']}\n"
+            f"**Endurance**: {self.user_entry['endurance']}  |  **Flexibility**: {self.user_entry['flexibility']}"
+        ),
+        inline=False
+        )
+
+        view = PlayerView(self.user_entry, self.enemy_name, self.enemy_stats, interaction)
+        await interaction.response.send_message(embed=embed, view=view)
+
 class EnemyView(View):
     def __init__(self, user_entry, enemy_name, enemy_stats, interaction):
         super().__init__()
@@ -58,12 +88,27 @@ class EnemyView(View):
             self.user_entry["hp"] -= baseDamage
 
             if self.user_entry["hp"] <= 0:
-                embed = discord.Embed (
-                    title=f"**The {self.enemy_name}** has attacked you!"
-                )
-                embed.add_field(name="", value=f"You suffer {baseDamage} damage!")
-                embed.add_field(name="", value=f"You have fallen! The gym quickly calls an ambulance!")
-                await interaction.message.edit(embed=embed, view=None)
+                reviveChance = max(20, self.user_entry["endurance"] / 10)
+
+                randomRoll = random.randint(0, 100)
+
+                if randomRoll <= reviveChance:
+                    self.user_entry["hp"] += 1
+
+                    embed = discord.Embed (
+                        title=f"The **{self.enemy_name}** has attacked you!"
+                    )
+                    embed.add_field(name="", value=f"You suffer {baseDamage} damage!", inline=False)
+                    embed.add_field(name="", value=f"The **{self.enemy_name}** has knocked you down, but your muscles won't give up! You recover 1 HP!", inline=False)
+                    view = ReviveView(self.user_entry, self.enemy_name, self.enemy_stats, self.interaction)
+                    await interaction.message.edit(embed=embed, view=view)
+                else:      
+                    embed = discord.Embed (
+                        title=f"The **{self.enemy_name}** has attacked you!"
+                    )
+                    embed.add_field(name="", value=f"You suffer {baseDamage} damage!", inline=False)
+                    embed.add_field(name="", value=f"You have fallen! The gym quickly calls an ambulance!", inline=False)
+                    await interaction.message.edit(embed=embed, view=None)
             else:
                 health_bar = generate_health_bar(self.user_entry["hp"])
 
@@ -72,7 +117,7 @@ class EnemyView(View):
                     description=f"",
                     color=discord.Color.red()
                 )
-                embed.add_field(name=f"**The {self.enemy_name}** has attacked you!", value=f"You suffer {baseDamage} damage!", inline=False)
+                embed.add_field(name=f"The **{self.enemy_name}** has attacked you!", value=f"You suffer {baseDamage} damage!", inline=False)
                 embed.add_field(name=f"Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
                 embed.add_field(
                 name="",
@@ -116,7 +161,7 @@ class PlayerView(View):
             view = EnemyView(self.user_entry, self.enemy_name, self.enemy_stats, self.interaction)
             await interaction.message.edit(embed=embed, view=view)
         else:
-            baseDamage = self.user_entry['strength'] - ((self.enemy_stats["defense"] * random.randint(1, 3)) / 2)
+            baseDamage = int(self.user_entry['strength'] - ((self.enemy_stats["defense"] * random.randint(1, 3)) / 2))
             baseDamage = max(1, baseDamage)  
 
             self.enemy_stats["hp"] -= baseDamage
@@ -132,8 +177,8 @@ class PlayerView(View):
                 embed = discord.Embed (
                     title=f"You punch the **{self.enemy_name}**!"
                 )
-                embed.add_field(name="", value=f"You deal {baseDamage} damage!")
-                embed.add_field(name="", value=f"It's the {self.enemy_name}'s turn!")
+                embed.add_field(name="", value=f"You deal {baseDamage} damage!", inline=False)
+                embed.add_field(name="", value=f"It's the {self.enemy_name}'s turn!", inline=False)
                 view = EnemyView(self.user_entry, self.enemy_name, self.enemy_stats, self.interaction)
                 await interaction.message.edit(embed=embed, view=view)
 
