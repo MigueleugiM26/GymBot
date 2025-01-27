@@ -5,17 +5,122 @@
       "c",
       35,
       "During a battle, increases your Strength by 4."
+    ],
+    "2.5kgs dumbbell": [
+      "e",
+      50,
+      "Permanently increases your Strength by 2.",
+      "strength",
+      "2"
+    ],
+    "jump rope": [
+      "e",
+      45,
+      "Permanently increases your Agility by 2.",
+      "agility",
+      "2"
+    ],
+    "ankle weights": [
+      "e",
+      55,
+      "Permanently increases your Endurance by 3.",
+      "endurance",
+      "3"
+    ],
+    "yoga mat": [
+      "e",
+      40,
+      "Permanently increases your Flexibility by 2.",
+      "flexibility",
+      "2"
+    ],
+    "resistance band": [
+      "e",
+      60,
+      "Permanently increases your HP by 1.",
+      "hp",
+      "1"
     ]
   },
   "6": {
     "gatorade": ["c", 60, "Clears Exhaustion"],
     "muscle roller": ["c", 85, "Clears Muscle Cramps"],
-    "massage gel": ["c", 75, "Clears Stiffness"]
+    "massage gel": ["c", 75, "Clears Stiffness"],
+    "5kgs dumbbell": [
+      "e",
+      120,
+      "Permanently increases your Strength by 4.",
+      "strength",
+      "4"
+    ],
+    "weighted vest": [  
+      "e",
+      110,
+      "Permanently increases your Endurance by 5.",
+      "endurance",
+      "5"
+    ],
+    "agility ladder": [
+      "e",
+      115,
+      "Permanently increases your Agility by 6.",
+      "agility",
+      "6"
+    ],
+    "stretch bands": [
+      "e",
+      95,
+      "Permanently increases your Flexibility by 4.",
+      "flexibility",
+      "4"
+    ],
+    "medicine ball": [
+      "e",
+      130,
+      "Permanently increases your HP by 1.",
+      "hp",
+      "1"
+    ]
   },
   "11": {
     "cooling spray": ["c", 100, "Clears Burning"],
     "pre workout": ["c", 110, "Clears Fatigue"],
     "ammonia": ["c", 90, "Clears Disorientation"],
-    "medicine": ["c", 105, "Clears Disease"]
+    "medicine": ["c", 105, "Clears Disease"],
+    "10kgs dumbbell": [
+      "e",
+      200,
+      "Permanently increases your Strength by 8.",
+      "strength",
+      "8"
+    ],
+    "parachute trainer": [
+      "e",
+      185,
+      "Permanently increases your Endurance by 7.",
+      "endurance",
+      "7"
+    ],
+    "speed cones": [
+      "e",
+      170,
+      "Permanently increases your Agility by 6.",
+      "agility",
+      "6"
+    ],
+    "foam roller": [
+      "e",
+      190,
+      "Permanently increases your Flexibility by 6.",
+      "flexibility",
+      "6"
+    ],
+    "weighted sled": [
+      "e",
+      210,
+      "Permanently increases your HP by 1.",
+      "hp",
+      "1"
+    ]
   }
 }

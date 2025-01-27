@@ -12,7 +12,7 @@ async def inventory(interaction):
     user_data = load_user_data()
 
     if user_id not in user_data or "inventory" not in user_data[user_id]:
-        await interaction.response.send_message("You haven't gone to a dungeon yet!", ephemeral=True)
+        await interaction.response.send_message("You haven't gone to a dungeon yet.", ephemeral=True)
         return
 
     inventory = user_data[user_id]["inventory"]
