@@ -5,18 +5,16 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 
 from commands import workout
+from commands import dungeon
 from commands import mirror
-from commands import ping
-from commands import sync
 
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 
 workout.setup(tree)
+dungeon.setup(tree)
 mirror.setup(tree)
-ping.setup(tree)
-sync.setup(tree)
 
     
 def reset_daily_stats():

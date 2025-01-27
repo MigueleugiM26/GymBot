@@ -1,12 +1,54 @@
 {
-  "Goblin": {
-    "hp": 3,
-    "attack": 1,
-    "defense": 2,
-    "precision": 5,
-    "level": 1,
-    "loot": {
-      "currency": 5
+  "1": {
+    "Goblin": {
+      "hp": 4,
+      "attack": 1,
+      "defense": 2,
+      "precision": 6,
+      "evasion": 4,
+      "loot": {
+        "gold": 5
+      }
+    },
+    "Skeleton": {
+      "hp": 3,
+      "attack": 1,
+      "defense": 1,
+      "precision": 8,
+      "evasion": 6,
+      "loot": {
+        "gold": 6
+      }
+    },
+    "Zombie": {
+      "hp": 5,
+      "attack": 1,
+      "defense": 3,
+      "precision": 4,
+      "evasion": 1,
+      "loot": {
+        "gold": 3
+      }
+    },
+    "Slime": {
+      "hp": 6,
+      "attack": 1,
+      "defense": 5,
+      "precision": 2,
+      "evasion": 1,
+      "loot": {
+        "gold": 4
+      }
+    },
+    "Orc": {
+      "hp": 5,
+      "attack": 1,
+      "defense": 7,
+      "precision": 5,
+      "evasion": 3,
+      "loot": {
+        "gold": 7
+      }
     }
   }
 }

@@ -11,6 +11,8 @@ async def sync(interaction):
         await interaction.response.send_message('Only the great Miguelindo can use this command.')
 
 
+'''
 def setup(command_tree):
     command_tree.add_command(sync)
     sync.tree = command_tree
+'''

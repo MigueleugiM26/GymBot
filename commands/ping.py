@@ -8,6 +8,8 @@ async def ping(interaction):
         f"{bot_latency}ms")
 
 
+'''
 def setup(command_tree):
     command_tree.add_command(ping)
     ping.client = command_tree.client
+'''
