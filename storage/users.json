@@ -1,130 +1,75 @@
 {
-    "450842915024142374": {
-        "level": 7,
-        "hp": 10,
-        "strength": 63,
-        "agility": 19,
-        "endurance": 54,
-        "flexibility": 21,
-        "skill": 28,
-        "hasRoutine": true,
-        "exercisesDone": 3,
-        "workoutMessageId": 1333260405916831805,
-        "groupsDone": [
-            "Full Body",
-            "Back"
-        ],
-        "inventory": {
-            "gold": [
-                "g",
-                72
-            ],
-            "small energy bar": [
-                "c",
-                6
-            ],
-            "small protein shake": [
-                "c",
-                1
-            ],
-            "2.5kgs dumbbell": [
-                "e",
-                "+2 strength"
-            ],
-            "medicine ball": [
-                "e",
-                "+1 hp"
-            ],
-            "yoga mat": [
-                "e",
-                "+2 flexibility"
-            ],
-            "stretch bands": [
-                "e",
-                "+4 flexibility"
-            ],
-            "jump rope": [
-                "e",
-                "+2 agility"
-            ],
-            "gatorade": [
-                "c",
-                9
-            ],
-            "weighted vest": [
-                "e",
-                "+5 endurance"
-            ],
-            "agility ladder": [
-                "e",
-                "+6 agility"
-            ],
-            "ankle weights": [
-                "e",
-                "+3 endurance"
-            ],
-            "resistance band": [
-                "e",
-                "+1 hp"
-            ],
-            "5kgs dumbbell": [
-                "e",
-                "+4 strength"
-            ],
-            "orc tooth": [
-                "s",
-                1
-            ],
-            "bone": [
-                "s",
-                2
-            ]
-        }
-    },
-    "345994187742773248": {
-        "level": 1,
-        "hp": 2,
-        "strength": 8,
-        "agility": 2,
-        "endurance": 5,
-        "flexibility": 1,
-        "skill": 3,
-        "hasRoutine": false,
-        "exercisesDone": 0,
-        "workoutMessageId": "",
-        "groupsDone": [],
-        "inventory": {}
-    },
-    "390836821723971594": {
-        "level": 1,
-        "hp": 2,
-        "strength": 3,
-        "agility": 0,
-        "endurance": 4,
-        "flexibility": 0,
-        "skill": 2,
-        "hasRoutine": false,
-        "exercisesDone": 0,
-        "workoutMessageId": 1333155609033310259,
-        "groupsDone": [
-            "Full Body"
-        ],
-        "inventory": {}
-    },
-    "1320866560663097517": {
-        "level": 1,
-        "hp": 2,
-        "strength": 3,
-        "agility": 2,
-        "endurance": 2,
-        "flexibility": 1,
-        "skill": 1,
-        "hasRoutine": false,
-        "workoutMessageId": 1333172673018335256,
-        "exercisesDone": 0,
-        "groupsDone": [
-            "Back"
-        ],
-        "inventory": {}
+  "450842915024142374": {
+    "level": 7,
+    "hp": 10,
+    "strength": 63,
+    "agility": 19,
+    "endurance": 54,
+    "flexibility": 21,
+    "skill": 28,
+    "hasRoutine": true,
+    "exercisesDone": 3,
+    "workoutMessageId": 1333260405916831805,
+    "groupsDone": ["Full Body", "Back"],
+    "inventory": {
+      "gold": ["g", 72],
+      "small energy bar": ["c", 6],
+      "small protein shake": ["c", 1],
+      "2.5kgs dumbbell": ["e", "+2 strength"],
+      "medicine ball": ["e", "+1 hp"],
+      "yoga mat": ["e", "+2 flexibility"],
+      "stretch bands": ["e", "+4 flexibility"],
+      "jump rope": ["e", "+2 agility"],
+      "gatorade": ["c", 9],
+      "weighted vest": ["e", "+5 endurance"],
+      "agility ladder": ["e", "+6 agility"],
+      "ankle weights": ["e", "+3 endurance"],
+      "resistance band": ["e", "+1 hp"],
+      "5kgs dumbbell": ["e", "+4 strength"],
+      "orc tooth": ["s", 1],
+      "bone": ["s", 2]
     }
+  },
+  "345994187742773248": {
+    "level": 1,
+    "hp": 2,
+    "strength": 8,
+    "agility": 2,
+    "endurance": 5,
+    "flexibility": 1,
+    "skill": 3,
+    "hasRoutine": false,
+    "exercisesDone": 0,
+    "workoutMessageId": "",
+    "groupsDone": [],
+    "inventory": {}
+  },
+  "390836821723971594": {
+    "level": 1,
+    "hp": 2,
+    "strength": 3,
+    "agility": 0,
+    "endurance": 4,
+    "flexibility": 0,
+    "skill": 2,
+    "hasRoutine": false,
+    "exercisesDone": 0,
+    "workoutMessageId": 1333155609033310259,
+    "groupsDone": ["Full Body"],
+    "inventory": {}
+  },
+  "1320866560663097517": {
+    "level": 1,
+    "hp": 2,
+    "strength": 3,
+    "agility": 2,
+    "endurance": 2,
+    "flexibility": 1,
+    "skill": 1,
+    "hasRoutine": false,
+    "workoutMessageId": 1333172673018335256,
+    "exercisesDone": 0,
+    "groupsDone": ["Back"],
+    "inventory": {}
+  }
 }

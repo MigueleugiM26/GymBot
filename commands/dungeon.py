@@ -126,7 +126,6 @@ class EnemyView(View):
                     else:
                         embed.add_field(name="", value=f"You suffer {baseDamage} damage!", inline=False)
                     embed.add_field(name="", value=f"You have fallen! The gym quickly calls an ambulance!", inline=False)
-                    await interaction.message.edit(embed=embed, view=None)
             else:
                 health_bar = generate_health_bar(self.user_entry["hp"])
 
@@ -252,14 +251,30 @@ class PlayerView(View):
 
     @discord.ui.button(label="Flee", style=discord.ButtonStyle.gray)
     async def flee_button(self, interaction: discord.Interaction, button: Button):
-        embed = discord.Embed(
-            title=f"{interaction.user.display_name}, you fled from the **{self.enemy_name}**!",
-            description="",
-            color=discord.Color.light_gray()
-        )
+        fleeChance = 5 + (self.user_entry["agility"] * 5 - self.enemy_stats["precision"])
+        fleeChance = max(5, fleeChance)
 
-        await interaction.message.edit(embed=embed, view=None)
-        self.stop() 
+        randomRoll = random.randint(0, 100)
+
+        if randomRoll <= fleeChance:
+            embed = discord.Embed(
+                title=f"{interaction.user.display_name}, you fled from the **{self.enemy_name}**!",
+                description="",
+                color=discord.Color.light_gray()
+            )
+
+            await interaction.message.edit(embed=embed, view=None)
+            self.stop() 
+        else: 
+            embed = discord.Embed (
+                title=f"You couldn't flee!"
+            )
+            embed.set_thumbnail(url=self.enemy_stats["image"])
+            embed.add_field(name="", value=f"It's the {self.enemy_name}'s turn!")
+            view = EnemyView(self.user_entry, self.enemy_name, self.enemy_stats, self.interaction)
+            await interaction.message.edit(embed=embed, view=view)
+        if not interaction.response.is_done():
+            await interaction.response.defer()
 
 @command(name='dungeon', description='Adventure inside a dungeon.')
 async def dungeon(interaction, level: int):
