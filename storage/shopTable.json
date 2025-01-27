@@ -1,0 +1,21 @@
+{
+  "1": {
+    "small energy bar": ["c", 25, "Restores 3 HP."],
+    "small protein shake": [
+      "c",
+      35,
+      "During a battle, increases your Strength by 4."
+    ]
+  },
+  "6": {
+    "gatorade": ["c", 60, "Clears Exhaustion"],
+    "muscle roller": ["c", 85, "Clears Muscle Cramps"],
+    "massage gel": ["c", 75, "Clears Stiffness"]
+  },
+  "11": {
+    "cooling spray": ["c", 100, "Clears Burning"],
+    "pre workout": ["c", 110, "Clears Fatigue"],
+    "ammonia": ["c", 90, "Clears Disorientation"],
+    "medicine": ["c", 105, "Clears Disease"]
+  }
+}
