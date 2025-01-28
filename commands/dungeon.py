@@ -88,11 +88,11 @@ class EnemyView(View):
             view = PlayerView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, self.interaction)
             await interaction.message.edit(embed=embed, view=view)
         else:
-            if self.statuses["hasStatus"] and random.randint(0, 100) <= 5:
+            if self.statuses["hasStatus"] and random.randint(0, 100) <= 85 or "skills" not in self.enemy_stats:
                 baseDamage = self.enemy_stats["attack"]
                 critical = False
 
-                if random.randint(0, 100) <= 85:
+                if random.randint(0, 100) <= 5:
                     baseDamage = baseDamage * 2
                     critical = True
 
