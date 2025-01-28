@@ -10,11 +10,11 @@
   "medicine": ["status", "disease"],
 
   "goblin ear": {
-    "value": 5,
+    "value": 9,
     "description": "Can be sold for a bit of gold."
   },
   "bone": {
-    "value": 3,
+    "value": 0.1,
     "description": "Can be sold for a bit of gold."
   },
   "flesh": {
@@ -26,7 +26,7 @@
     "description": "Can be sold for a bit of gold."
   },
   "orc tooth": {
-    "value": 9,
+    "value": 3,
     "description": "Can be sold for a bit of gold."
   },
   "centaur hoof": {

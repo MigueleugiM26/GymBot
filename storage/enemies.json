@@ -8,8 +8,8 @@
       "evasion": 4,
       "loot": {
         "gold": ["g", 100, 5],
-        "goblin ear": ["s", 30, 1],
-        "small energy bar": ["c", 12, 1]
+        "goblin ear": ["s", 50, 2],
+        "small energy bar": ["c", 17, 1]
       },
       "image": "https://5e.tools/img/bestiary/tokens/MM/Goblin.webp"
     },
@@ -21,8 +21,8 @@
       "evasion": 6,
       "loot": {
         "gold": ["g", 100, 6],
-        "bone": ["s", 30, 3],
-        "small energy bar": ["c", 6, 1]
+        "bone": ["s", 50, 256],
+        "small energy bar": ["c", 14, 1]
       },
       "image": "https://5e.tools/img/bestiary/tokens/MM/Skeleton.webp"
     },
@@ -34,8 +34,8 @@
       "evasion": 1,
       "loot": {
         "gold": ["g", 100, 3],
-        "flesh": ["s", 30, 2],
-        "small energy bar": ["c", 8, 1]
+        "flesh": ["s", 50, 6],
+        "small protein shake": ["c", 15, 1]
       },
       "image": "https://cdn.discordapp.com/attachments/1330999204910465126/1333575320191893617/noname-cutout.png?ex=6799644c&is=679812cc&hm=604f137e1cfb12ddee5537e87b7ad13b4dc4ff5c5c404feeb8c3012620d87fdb&"
     },
@@ -43,12 +43,12 @@
       "hp": 4,
       "attack": 1,
       "defense": 5,
-      "precision": 2,
-      "evasion": 1,
+      "precision": 1,
+      "evasion": 12,
       "loot": {
         "gold": ["g", 100, 4],
-        "goo": ["s", 30, 5],
-        "small energy bar": ["c", 2, 1]
+        "goo": ["s", 50, 10],
+        "small energy bar": ["c", 35, 2]
       },
       "image": "https://5e.tools/img/bestiary/tokens/BGG/Bag%20Jelly.webp"
     },
@@ -60,8 +60,8 @@
       "evasion": 4,
       "loot": {
         "gold": ["g", 100, 7],
-        "orc tooth": ["s", 15, 1],
-        "small protein shake": ["c", 10, 1]
+        "orc tooth": ["s", 30, 32],
+        "small protein shake": ["c", 23, 1]
       },
       "image": "https://5e.tools/img/bestiary/tokens/MM/Orc.webp"
     }
@@ -75,8 +75,8 @@
       "evasion": 10,
       "loot": {
         "gold": ["g", 100, 24],
-        "centaur hoof": ["s", 20, 4],
-        "small protein shake": ["c", 10, 2]
+        "centaur hoof": ["s", 35, 4],
+        "small protein shake": ["c", 26, 2]
       },
       "skills": {
         "charge": ["100", "The Centaur charges at you!", "damage", "2"]

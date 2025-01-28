@@ -23,11 +23,12 @@ def generate_health_bar(current_hp, bar_length=10):
 
 
 class ReviveView(View):
-    def __init__(self, user_entry, enemy_name, enemy_stats, interaction):
+    def __init__(self, user_entry, enemy_name, enemy_stats, statuses, interaction):
         super().__init__()
         self.user_entry = user_entry
         self.enemy_name = enemy_name
         self.enemy_stats = enemy_stats
+        self.statuses = statuses
         self.interaction = interaction
 
     @discord.ui.button(label="Continue", style=discord.ButtonStyle.danger)
@@ -39,6 +40,15 @@ class ReviveView(View):
             description=f"{interaction.user.display_name} won't go down!",
             color=discord.Color.red()
         )
+
+        for status_key, is_active in self.statuses.items():
+            if status_key == "hasStatus":
+                continue
+
+            if is_active: 
+                formatted_status = status_key.replace("has", "").replace("Cramps", " Cramps")
+                embed.add_field(name="", value=f"You are afflicted by **{formatted_status.strip()}**!", inline=False)
+
         embed.set_thumbnail(url=self.enemy_stats["image"])
         embed.add_field(name="Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
         embed.add_field(
@@ -79,9 +89,9 @@ class ConsumableButton(Button):
         value = int(item_details[2]) if len(item_details) > 2 else None
 
         embed = discord.Embed(
-                title=f"Inventory",
+                title=f"",
                 description="",
-                color=discord.Color.green()
+                color=discord.Color.red()
             )
         
         if item_type == "boost":
@@ -89,11 +99,13 @@ class ConsumableButton(Button):
                 current_hp = self.user_entry.get("hp", 0)
                 new_hp = min(current_hp + value, max_hp)
                 self.user_entry["hp"] = new_hp
-                embed.set_footer(text=f"You used **{self.item_name.title()}**. You recovered {value} HP.")
+                embed.title = f"You used **{self.item_name.title()}**."
+                embed.description = f"You recovered {value} HP."
             else:
                 current_stat = self.user_entry.get(stat, 0)
                 self.user_entry[stat] = current_stat + value
-                embed.set_footer(text=f"You used **{self.item_name.title()}**. Your {stat.title()} increased by {value}.")
+                embed.title = f"You used **{self.item_name.title()}**."
+                embed.description = f"Your {stat.title()} increased by {value}."
         elif item_type == "status":
             self.statuses["hasStatus"] = False
             statBool = stat.title()
@@ -103,12 +115,17 @@ class ConsumableButton(Button):
             if status_type_key in self.statuses:
                 self.statuses[status_type_key] = False
                 
-            embed.set_footer(text=f"You used **{self.item_name.title()}**. It clears **{stat.replace('_', ' ').title()}**.")
+            embed.title = f"You used **{self.item_name.title()}**."
+            embed.description = f"It clears **{stat.replace('_', ' ').title()}**."
         else:
             await interaction.response.send_message(
                 f"**{self.item_name.title()}** is an unknown type of item.",
                 ephemeral=True
             )
+
+        embed.set_thumbnail(url=self.enemy_stats["image"])
+        embed.add_field(name="", value=f"It's the {self.enemy_name}'s turn!", inline=False)
+
 
         inventory = self.user_entry.get("inventory", {})
         if self.item_name in inventory:
@@ -116,22 +133,12 @@ class ConsumableButton(Button):
             if inventory[self.item_name][1] <= 0:
                 del inventory[self.item_name]
 
-        consumables = []
-        for level, items in shop_data.items():
-            for item_name, item_details in items.items():
-                if item_name in inventory and item_details[0] == "c":
-                    consumables.append(f"**{inventory[item_name][1]}x {item_name.title()}** \n{item_details[2]}\n")
-        if consumables:
-            embed.add_field(name="", value="\n".join(consumables), inline=False)
-        else:
-            embed.add_field(name="", value="You have no items.", inline=False)
-
         user_data = load_user_data()
         user_id = str(interaction.user.id) 
         user_data[user_id]["inventory"] = inventory  
         save_user_data(user_data)
 
-        view = InventoryView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, self.interaction)
+        view = EnemyView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, self.interaction)
         await interaction.message.edit(embed=embed, view=view)
 
         if not interaction.response.is_done():
@@ -179,8 +186,16 @@ class InventoryView(View):
             description=f"",
             color=discord.Color.red()
         )
+
         embed.set_thumbnail(url=self.enemy_stats["image"])
         embed.add_field(name=f"", value=f"It's your turn", inline=False)
+        for status_key, is_active in self.statuses.items():
+            if status_key == "hasStatus":
+                continue
+    
+            if is_active: 
+                formatted_status = status_key.replace("has", "").replace("Cramps", " Cramps")
+                embed.add_field(name="", value=f"You are afflicted by **{formatted_status.strip()}**!", inline=False)
         embed.add_field(name=f"Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
         embed.add_field(
         name="",
@@ -224,6 +239,14 @@ class EnemyView(View):
             )
             embed.set_thumbnail(url=self.enemy_stats["image"])
             embed.add_field(name=f"You dodged the **{self.enemy_name}**'s attack!", value=f"It's your turn", inline=False)
+            for status_key, is_active in self.statuses.items():
+                if status_key == "hasStatus":
+                    continue
+        
+                if is_active: 
+                    formatted_status = status_key.replace("has", "").replace("Cramps", " Cramps")
+                    embed.add_field(name="", value=f"You are afflicted by **{formatted_status.strip()}**!", inline=False)
+
             embed.add_field(name=f"Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
             embed.add_field(
             name="",
@@ -237,8 +260,9 @@ class EnemyView(View):
             view = PlayerView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, self.interaction)
             await interaction.message.edit(embed=embed, view=view)
         else:
-            if self.statuses["hasStatus"] and random.randint(0, 100) <= 85 or "skills" not in self.enemy_stats:
+            if self.statuses["hasStatus"] or random.randint(0, 100) <= 85 or "skills" not in self.enemy_stats:
                 baseDamage = self.enemy_stats["attack"]
+
                 critical = False
 
                 if random.randint(0, 100) <= 5:
@@ -246,6 +270,9 @@ class EnemyView(View):
                     critical = True
 
                 self.user_entry["hp"] -= baseDamage
+                if self.statuses["hasBurning"]:
+                    burningDamage = max(0.5, self.enemy_stats["attack"]/4)
+                    self.user_entry["hp"] -= burningDamage
                 self.user_entry["hp"] = max(0, self.user_entry["hp"])
 
                 if self.user_entry["hp"] <= 0:
@@ -257,25 +284,31 @@ class EnemyView(View):
                         self.user_entry["hp"] += 1
 
                         embed = discord.Embed (
-                            title=f"The **{self.enemy_name}** has attacked you!"
+                            title=f"The **{self.enemy_name}** has attacked you!",
+                            color=discord.Color.red()
                         )
                         embed.set_thumbnail(url=self.enemy_stats["image"])
                         if critical:
                             embed.add_field(name="", value=f"**Critical hit!** You suffer {baseDamage} damage!", inline=False)
                         else:
                             embed.add_field(name="", value=f"You suffer {baseDamage} damage!", inline=False)
+                        if self.statuses["hasBurning"]:
+                            embed.add_field(name="", value=f"You also suffer {burningDamage} burning damage!", inline=False)
                         embed.add_field(name="", value=f"The **{self.enemy_name}** has knocked you down, but your muscles won't give up! You recover 1 HP!", inline=False)
-                        view = ReviveView(self.user_entry, self.enemy_name, self.enemy_stats, self.interaction)
+                        view = ReviveView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, self.interaction)
                         await interaction.message.edit(embed=embed, view=view)
                     else:      
                         embed = discord.Embed (
-                            title=f"The **{self.enemy_name}** has attacked you!"
+                            title=f"The **{self.enemy_name}** has attacked you!",
+                            color=discord.Color.red()
                         )
                         embed.set_thumbnail(url=self.enemy_stats["image"])
                         if critical:
                             embed.add_field(name="", value=f"**Critical hit!** You suffer {baseDamage} damage!", inline=False)
                         else:
                             embed.add_field(name="", value=f"You suffer {baseDamage} damage!", inline=False)
+                        if self.statuses["hasBurning"]:
+                            embed.add_field(name="", value=f"You also suffer {burningDamage} burning damage!", inline=False)
                         embed.add_field(name="", value=f"You have fallen! The gym quickly calls an ambulance!", inline=False)
 
                         player_inventory = self.user_entry.setdefault("inventory", {})
@@ -306,7 +339,23 @@ class EnemyView(View):
                         color=discord.Color.red()
                     )
                     embed.set_thumbnail(url=self.enemy_stats["image"])
-                    embed.add_field(name=f"The **{self.enemy_name}** has attacked you!", value=f"You suffer {baseDamage} damage!", inline=False)
+
+                    burningString = ""
+                    if self.statuses["hasBurning"]:
+                        burningString = f"\nYou also suffer {burningDamage} burning damage!"
+
+                    if critical:
+                        embed.add_field(name=f"The **{self.enemy_name}** has attacked you!", value=f"**Critical hit!** You suffer {baseDamage} damage!{burningString}", inline=False)
+                    else:
+                        embed.add_field(name=f"The **{self.enemy_name}** has attacked you!", value=f"You suffer {baseDamage} damage!{burningString}", inline=False)
+                    
+                    for status_key, is_active in self.statuses.items():
+                        if status_key == "hasStatus":
+                            continue
+
+                        if is_active: 
+                            formatted_status = status_key.replace("has", "").replace("Cramps", " Cramps")
+                            embed.add_field(name="", value=f"You are afflicted by **{formatted_status.strip()}**!", inline=False)
                     embed.add_field(name=f"Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
                     embed.add_field(
                     name="",
@@ -357,7 +406,8 @@ class EnemyView(View):
                         self.user_entry["hp"] += 1
 
                         embed = discord.Embed (
-                            title=f"The **{self.enemy_name}** has used **{skill_name}**!"
+                            title=f"The **{self.enemy_name}** has used **{skill_name}**!",
+                            color=discord.Color.red()
                         )
                         embed.add_field(name="", value=skill_description, inline=False)
                         embed.set_thumbnail(url=self.enemy_stats["image"])
@@ -366,11 +416,12 @@ class EnemyView(View):
                         elif skill_type == "ailment":
                             embed.add_field(name="", value=f"You are afflicted by **{skill_name}**!", inline=False)
                         embed.add_field(name="", value=f"The **{self.enemy_name}** has knocked you down, but your muscles won't give up! You recover 1 HP!", inline=False)
-                        view = ReviveView(self.user_entry, self.enemy_name, self.enemy_stats, self.interaction)
+                        view = ReviveView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, self.interaction)
                         await interaction.message.edit(embed=embed, view=view)
                     else:      
                         embed = discord.Embed (
-                            title=f"The **{self.enemy_name}** has used **{skill_name}**!"
+                            title=f"The **{self.enemy_name}** has used **{skill_name}**!",
+                            color=discord.Color.red()
                         )
 
                         embed.add_field(name="", value=skill_description, inline=False)
@@ -413,6 +464,7 @@ class EnemyView(View):
                         embed.add_field(name=f"{skill_description}", value=f"You suffer {baseDamage} damage!", inline=False)
                     elif skill_type == "ailment":
                         embed.add_field(name=f"{skill_description}", value=f"You are afflicted by **{skill_effect}**!", inline=False)
+
                     embed.add_field(name=f"Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
                     embed.add_field(
                     name="",
@@ -438,6 +490,8 @@ class PlayerView(View):
         self.enemy_stats = enemy_stats
         self.statuses = statuses
         self.interaction = interaction
+
+        self.skills_button.disabled = self.statuses.get("hasMuscleCramps", False)
         
     @discord.ui.button(label="Punch", style=discord.ButtonStyle.danger)
     async def attack_button(self, interaction: discord.Interaction, button: Button):
@@ -448,7 +502,8 @@ class PlayerView(View):
 
         if randomRoll <= evasionChance:
             embed = discord.Embed (
-                title=f"The **{self.enemy_name}** dodged your punch!"
+                title=f"The **{self.enemy_name}** dodged your punch!",
+                color=discord.Color.red()
             )
             embed.set_thumbnail(url=self.enemy_stats["image"])
             embed.add_field(name="", value=f"It's the {self.enemy_name}'s turn!")
@@ -484,7 +539,10 @@ class PlayerView(View):
 
                 for item, (type, chance, value) in loot.items():
                     if random.randint(1, 100) <= chance: 
-                        item_dropped = max(1, random.randint(value // 2, value))
+                        if item == "gold":
+                            item_dropped = max(1, random.randint(value // 2, value))
+                        else:
+                            item_dropped = max(1, random.randint(1, value))
                         if item not in player_inventory:
                             player_inventory[item] = [type, item_dropped]
                         else:
@@ -504,7 +562,8 @@ class PlayerView(View):
                 await interaction.message.edit(embed=embed, view=None)
             else:
                 embed = discord.Embed (
-                    title=f"You punch the **{self.enemy_name}**!"
+                    title=f"You punch the **{self.enemy_name}**!",
+                    color=discord.Color.red()
                 )
                 embed.set_thumbnail(url=self.enemy_stats["image"])
                 if critical:
@@ -520,6 +579,7 @@ class PlayerView(View):
 
     @discord.ui.button(label="Skills", style=discord.ButtonStyle.primary)
     async def skills_button(self, interaction: discord.Interaction, button: Button):
+
         await interaction.response.send_message(f"You prepare a skill against the **{self.enemy_name}**!", ephemeral=True)
 
     @discord.ui.button(label="Inventory", style=discord.ButtonStyle.green)
@@ -564,7 +624,8 @@ class PlayerView(View):
             self.stop() 
         else: 
             embed = discord.Embed (
-                title=f"You couldn't flee!"
+                title=f"You couldn't flee!",
+                color=discord.Color.red()
             )
             embed.set_thumbnail(url=self.enemy_stats["image"])
             embed.add_field(name="", value=f"It's the {self.enemy_name}'s turn!")
@@ -572,6 +633,7 @@ class PlayerView(View):
             await interaction.message.edit(embed=embed, view=view)
         if not interaction.response.is_done():
             await interaction.response.defer()
+
 
 @command(name='dungeon', description='Adventure inside a dungeon.')
 async def dungeon(interaction, level: int):

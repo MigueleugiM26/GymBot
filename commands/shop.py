@@ -143,6 +143,7 @@ class ShopView(View):
             item_value = item_data.get(item, {}).get("value", 0)
             total_value += item_value * count
 
+        total_value = int(total_value)
         inventory["gold"][1] += total_value
 
         for item in sellable_items:
