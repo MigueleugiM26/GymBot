@@ -96,6 +96,7 @@ class EnemyView(View):
                 critical = True
 
             self.user_entry["hp"] -= baseDamage
+            self.user_entry["hp"] = max(0, self.user_entry["hp"])
 
             if self.user_entry["hp"] <= 0:
                 reviveChance = max(20, self.user_entry["endurance"] / 10)
@@ -126,6 +127,27 @@ class EnemyView(View):
                     else:
                         embed.add_field(name="", value=f"You suffer {baseDamage} damage!", inline=False)
                     embed.add_field(name="", value=f"You have fallen! The gym quickly calls an ambulance!", inline=False)
+
+                    player_inventory = self.user_entry.setdefault("inventory", {})
+                    gold_loot_info = self.enemy_stats["loot"].get("gold", [])
+                    base_gold = gold_loot_info[2]
+
+                    gold_loss = random.randint(base_gold // 2, base_gold * 2)
+
+                    current_gold = player_inventory.get("gold", ["g", 0])[1]
+                    gold_after_loss = max(0, current_gold - gold_loss)  
+
+                    player_inventory["gold"] = ["g", gold_after_loss]
+
+                    embed.add_field(name="", value=f"You had to pay {gold_loss} gold in healthcare.", inline=False)
+
+                    user_data = load_user_data()
+                    user_id = str(interaction.user.id) 
+                    user_data[user_id].setdefault("inventory", {}).update(self.user_entry.get("inventory", {}))
+                    save_user_data(user_data)
+
+                    await interaction.message.edit(embed=embed, view=None)
+
             else:
                 health_bar = generate_health_bar(self.user_entry["hp"])
 

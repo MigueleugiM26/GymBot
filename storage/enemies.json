@@ -61,9 +61,27 @@
       "loot": {
         "gold": ["g", 100, 7],
         "orc tooth": ["s", 15, 1],
-        "small energy bar": ["c", 10, 1]
+        "small protein shake": ["c", 10, 1]
       },
       "image": "https://5e.tools/img/bestiary/tokens/MM/Orc.webp"
+    }
+  },
+  "2": {
+    "Centaur": {
+      "hp": 13,
+      "attack": 1,
+      "defense": 5,
+      "precision": 13,
+      "evasion": 10,
+      "loot": {
+        "gold": ["g", 100, 24],
+        "centaur hoof": ["s", 20, 4],
+        "small protein shake": ["c", 10, 2]
+      },
+      "skills": {
+        "charge": ["100", "The Centaur charges at you!", "damage", "2"]
+      },
+      "image": "https://5e.tools/img/bestiary/tokens/MM/Centaur.webp"
     }
   }
 }
