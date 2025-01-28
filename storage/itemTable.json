@@ -1,4 +1,14 @@
 {
+  "small energy bar": ["boost", "hp", "3"],
+  "small protein shake": ["boost", "strength", "4"],
+  "gatorade": ["status", "exhaustion", "4"],
+  "muscle roller": ["status", "muscle cramps"],
+  "massage gel": ["status", "stiffness"],
+  "cooling spray": ["status", "burning"],
+  "pre workout": ["status", "fatigue"],
+  "ammonia": ["status", "disorientation"],
+  "medicine": ["status", "disease"],
+
   "goblin ear": {
     "value": 5,
     "description": "Can be sold for a bit of gold."

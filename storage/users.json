@@ -2,7 +2,7 @@
   "450842915024142374": {
     "level": 7,
     "hp": 10,
-    "strength": 1,
+    "strength": 67,
     "agility": 19,
     "endurance": 54,
     "flexibility": 21,
@@ -12,9 +12,8 @@
     "workoutMessageId": 1333260405916831805,
     "groupsDone": ["Full Body", "Back"],
     "inventory": {
-      "gold": ["g", 470],
+      "gold": ["g", 2395],
       "small energy bar": ["c", 6],
-      "small protein shake": ["c", 3],
       "2.5kgs dumbbell": ["e", "+2 strength"],
       "medicine ball": ["e", "+1 hp"],
       "yoga mat": ["e", "+2 flexibility"],
@@ -25,7 +24,14 @@
       "agility ladder": ["e", "+6 agility"],
       "ankle weights": ["e", "+3 endurance"],
       "resistance band": ["e", "+1 hp"],
-      "5kgs dumbbell": ["e", "+4 strength"]
+      "5kgs dumbbell": ["e", "+4 strength"],
+      "small protein shake": ["c", 2],
+      "muscle roller": ["c", 1],
+      "massage gel": ["c", 1],
+      "cooling spray": ["c", 1],
+      "pre workout": ["c", 1],
+      "ammonia": ["c", 1],
+      "medicine": ["c", 1]
     }
   },
   "345994187742773248": {

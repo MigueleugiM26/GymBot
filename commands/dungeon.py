@@ -9,6 +9,13 @@ from commands.globalFunctions import load_user_data, save_user_data
 with open("storage/enemies.json", "r") as file:
     enemies_data = json.load(file)
 
+with open("storage/shopTable.json", "r") as file:
+    shop_data = json.load(file)
+
+with open("storage/itemTable.json", "r") as file:
+    item_data = json.load(file)
+
+
 def generate_health_bar(current_hp, bar_length=10):
     filled_length = round(bar_length * current_hp / max_hp) 
     empty_length = bar_length - filled_length
@@ -49,6 +56,148 @@ class ReviveView(View):
         if not interaction.response.is_done():
             await interaction.response.defer()
 
+
+class ConsumableButton(Button):
+    def __init__(self, user_entry, enemy_name, enemy_stats, statuses, item_name, quantity, interaction, style):
+        super().__init__(label=f"{item_name.title()}", style=style)
+        self.user_entry = user_entry
+        self.enemy_name = enemy_name
+        self.enemy_stats = enemy_stats
+        self.statuses = statuses
+        self.item_name = item_name
+        self.quantity = quantity
+        self.interaction = interaction
+
+    async def callback(self, interaction: discord.Interaction):
+        item_details = item_data.get(self.item_name)
+        if not item_data:
+            await interaction.response.send_message(f"Item details for {self.item_name} are missing!", ephemeral=True)
+            return
+        
+        item_type = item_details[0]
+        stat = item_details[1]
+        value = int(item_details[2]) if len(item_details) > 2 else None
+
+        embed = discord.Embed(
+                title=f"Inventory",
+                description="",
+                color=discord.Color.green()
+            )
+        
+        if item_type == "boost":
+            if stat == "hp":
+                current_hp = self.user_entry.get("hp", 0)
+                new_hp = min(current_hp + value, max_hp)
+                self.user_entry["hp"] = new_hp
+                embed.set_footer(text=f"You used **{self.item_name.title()}**. You recovered {value} HP.")
+            else:
+                current_stat = self.user_entry.get(stat, 0)
+                self.user_entry[stat] = current_stat + value
+                embed.set_footer(text=f"You used **{self.item_name.title()}**. Your {stat.title()} increased by {value}.")
+        elif item_type == "status":
+            self.statuses["hasStatus"] = False
+            statBool = stat.title()
+            statBool = statBool.replace(" ", "")
+
+            status_type_key = f"has{statBool}"
+            if status_type_key in self.statuses:
+                self.statuses[status_type_key] = False
+                
+            embed.set_footer(text=f"You used **{self.item_name.title()}**. It clears **{stat.replace('_', ' ').title()}**.")
+        else:
+            await interaction.response.send_message(
+                f"**{self.item_name.title()}** is an unknown type of item.",
+                ephemeral=True
+            )
+
+        inventory = self.user_entry.get("inventory", {})
+        if self.item_name in inventory:
+            inventory[self.item_name][1] -= 1 
+            if inventory[self.item_name][1] <= 0:
+                del inventory[self.item_name]
+
+        consumables = []
+        for level, items in shop_data.items():
+            for item_name, item_details in items.items():
+                if item_name in inventory and item_details[0] == "c":
+                    consumables.append(f"**{inventory[item_name][1]}x {item_name.title()}** \n{item_details[2]}\n")
+        if consumables:
+            embed.add_field(name="", value="\n".join(consumables), inline=False)
+        else:
+            embed.add_field(name="", value="You have no items.", inline=False)
+
+        user_data = load_user_data()
+        user_id = str(interaction.user.id) 
+        user_data[user_id]["inventory"] = inventory  
+        save_user_data(user_data)
+
+        view = InventoryView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, self.interaction)
+        await interaction.message.edit(embed=embed, view=view)
+
+        if not interaction.response.is_done():
+            await interaction.response.defer()
+
+
+class InventoryView(View):
+    def __init__(self, user_entry, enemy_name, enemy_stats, statuses, interaction):
+        super().__init__()
+        self.user_entry = user_entry
+        self.enemy_name = enemy_name
+        self.enemy_stats = enemy_stats
+        self.statuses = statuses
+        self.interaction = interaction
+
+        self.add_consumable_buttons()
+
+    def add_consumable_buttons(self):
+        inventory = self.user_entry.get("inventory", {})
+        consumables = {
+            item_name: details
+            for item_name, details in inventory.items()
+            if details[0] == "c" 
+        }
+
+        for item_name, details in consumables.items():
+            item_details = item_data.get(item_name)
+            if item_details[0] == "boost":
+                button_label = f"{item_name.title()})" 
+                self.add_item(ConsumableButton(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, item_name, details[1], self.interaction, discord.ButtonStyle.green))
+            elif item_details[0] == "status":
+                status = item_details[1] 
+                statBool = status.title()
+                statBool = statBool.replace(" ", "")
+                if self.statuses.get(f"has{statBool}", False):
+                    button_label = f"{item_name.title()}"
+                    self.add_item(ConsumableButton(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, item_name, details[1], self.interaction, discord.ButtonStyle.blurple))
+
+    @discord.ui.button(label="< Back", style=discord.ButtonStyle.secondary)
+    async def back_button(self, interaction:discord.Interaction, button: Button):
+        health_bar = generate_health_bar(self.user_entry["hp"])
+
+        embed = discord.Embed(
+            title=f"{interaction.user.display_name} vs **{self.enemy_name}**",
+            description=f"",
+            color=discord.Color.red()
+        )
+        embed.set_thumbnail(url=self.enemy_stats["image"])
+        embed.add_field(name=f"", value=f"It's your turn", inline=False)
+        embed.add_field(name=f"Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
+        embed.add_field(
+        name="",
+        value=(
+            f"**Strength**: {self.user_entry['strength']}  |  **Agility**: {self.user_entry['agility']}\n"
+            f"**Endurance**: {self.user_entry['endurance']}  |  **Flexibility**: {self.user_entry['flexibility']}"
+        ),
+        inline=False
+        )
+
+        view = PlayerView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, self.interaction)
+        await interaction.message.edit(embed=embed, view=view)
+
+        if not interaction.response.is_done():
+            await interaction.response.defer()
+
+
 class EnemyView(View):
     def __init__(self, user_entry, enemy_name, enemy_stats, statuses, interaction):
         super().__init__()
@@ -61,7 +210,7 @@ class EnemyView(View):
     @discord.ui.button(label="Continue", style=discord.ButtonStyle.danger)
     async def continue_button(self, interaction: discord.Interaction, button: Button):
         evasionChance = 5 + (self.enemy_stats["precision"] - self.user_entry["flexibility"])
-        evasionChance = max(5, min(50, evasionChance))
+        evasionChance = max(5, min(75, evasionChance))
 
         randomRoll = random.randint(0, 100)
 
@@ -192,8 +341,12 @@ class EnemyView(View):
                         baseDamage = self.enemy_stats["attack"] + skill_effect
                         self.user_entry["hp"] = max(0, self.user_entry["hp"] - baseDamage)
                     elif skill_type == "ailment":
-                        self.statuses["hasStatus"] = True
-                        
+                        statBool = skill_effect.title()
+                        statBool = statBool.replace(" ", "")
+                        status_key = f"has{statBool}"
+                        if status_key in self.statuses:
+                            self.statuses[status_key] = True
+                        self.statuses["hasStatus"] = True                        
 
                 if self.user_entry["hp"] <= 0:
                     reviveChance = max(20, self.user_entry["endurance"] / 10)
@@ -286,11 +439,10 @@ class PlayerView(View):
         self.statuses = statuses
         self.interaction = interaction
         
-
     @discord.ui.button(label="Punch", style=discord.ButtonStyle.danger)
     async def attack_button(self, interaction: discord.Interaction, button: Button):
         evasionChance = 5 + (self.user_entry["agility"] - self.enemy_stats["evasion"])
-        evasionChance = max(5, min(50, evasionChance))
+        evasionChance = max(5, min(75, evasionChance))
 
         randomRoll = random.randint(0, 100)
 
@@ -372,7 +524,27 @@ class PlayerView(View):
 
     @discord.ui.button(label="Inventory", style=discord.ButtonStyle.green)
     async def inventory_button(self, interaction: discord.Interaction, button: Button):
-        await interaction.response.send_message("You check your inventory.", ephemeral=True)
+        embed = discord.Embed(
+                title=f"Inventory",
+                description="",
+                color=discord.Color.green()
+            )
+        inventory = self.user_entry.get("inventory", {})
+        consumables = []
+        for level, items in shop_data.items():
+            for item_name, item_details in items.items():
+                if item_name in inventory and item_details[0] == "c":
+                    consumables.append(f"**{inventory[item_name][1]}x {item_name.title()}** \n{item_details[2]}\n")
+        if consumables:
+            embed.add_field(name="", value="\n".join(consumables), inline=False)
+        else:
+            embed.add_field(name="", value="You have no items.", inline=False)
+
+        view = InventoryView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, self.interaction)
+        await interaction.message.edit(embed=embed, view=view)
+
+        if not interaction.response.is_done():
+            await interaction.response.defer()
 
     @discord.ui.button(label="Flee", style=discord.ButtonStyle.gray)
     async def flee_button(self, interaction: discord.Interaction, button: Button):
