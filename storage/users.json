@@ -12,7 +12,7 @@
     "workoutMessageId": 1333260405916831805,
     "groupsDone": ["Full Body", "Back"],
     "inventory": {
-      "gold": ["g", 355],
+      "gold": ["g", 470],
       "small energy bar": ["c", 6],
       "small protein shake": ["c", 3],
       "2.5kgs dumbbell": ["e", "+2 strength"],
@@ -25,10 +25,7 @@
       "agility ladder": ["e", "+6 agility"],
       "ankle weights": ["e", "+3 endurance"],
       "resistance band": ["e", "+1 hp"],
-      "5kgs dumbbell": ["e", "+4 strength"],
-      "orc tooth": ["s", 1],
-      "bone": ["s", 2],
-      "centaur hoof": ["s", 10]
+      "5kgs dumbbell": ["e", "+4 strength"]
     }
   },
   "345994187742773248": {
