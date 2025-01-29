@@ -260,7 +260,7 @@ class EnemyView(View):
             view = PlayerView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, self.interaction)
             await interaction.message.edit(embed=embed, view=view)
         else:
-            if self.statuses["hasStatus"] or random.randint(0, 100) <= 85 or "skills" not in self.enemy_stats:
+            if self.statuses["hasStatus"] or random.randint(0, 100) <= 5 or "skills" not in self.enemy_stats:
                 baseDamage = self.enemy_stats["attack"]
 
                 critical = False
@@ -510,6 +510,26 @@ class PlayerView(View):
             view = EnemyView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, self.interaction)
             await interaction.message.edit(embed=embed, view=view)
         else:
+            if self.statuses["hasDisorientation"] and random.randint(0, 100) <= 75:
+                self.user_entry["hp"] -= max(1, self.enemy_stats["attack"]/2)
+                self.user_entry["hp"] = max(1, self.user_entry["hp"])
+
+                embed = discord.Embed (
+                    title=f"You are disoriented, and you punch yourself!",
+                    color=discord.Color.red()
+                )
+                embed.set_thumbnail(url=self.enemy_stats["image"])
+                embed.add_field(name="", value=f"You suffer {max(1, self.enemy_stats["attack"]/2)} damage!", inline=False)
+                embed.add_field(name="", value=f"It's the {self.enemy_name}'s turn!", inline=False)
+                view = EnemyView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, self.interaction)
+                await interaction.message.edit(embed=embed, view=view)
+
+                if not interaction.response.is_done():
+                    await interaction.response.defer()
+
+                return
+
+
             baseDamage = self.user_entry['strength'] - ((self.enemy_stats["defense"] * random.randint(1, 3)) / 2)
             baseDamage = max(1, baseDamage)  
             critical = False
