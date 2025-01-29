@@ -61,7 +61,7 @@ class ReviveView(View):
         inline=False
         )
 
-        view = PlayerView(self.user_entry, self.enemy_name, self.enemy_stats, interaction)
+        view = PlayerView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, interaction)
         await interaction.message.edit(embed=embed, view=view)
         
         if not interaction.response.is_done():
@@ -249,7 +249,7 @@ class EnemyView(View):
     @discord.ui.button(label="Continue", style=discord.ButtonStyle.danger)
     async def continue_button(self, interaction: discord.Interaction, button: Button):
         evasionChance = 5 + (self.enemy_stats["precision"] - self.user_entry["flexibility"])
-        evasionChance = max(5, min(75, evasionChance))
+        evasionChance = max(5, min(90, evasionChance))
 
         randomRoll = random.randint(0, 100)
 
@@ -292,7 +292,7 @@ class EnemyView(View):
             view = PlayerView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, self.interaction)
             await interaction.message.edit(embed=embed, view=view)
         else:
-            if self.statuses["hasStatus"] or random.randint(0, 100) <= 50 or "skills" not in self.enemy_stats: # Normal Attack
+            if self.statuses["hasStatus"] or random.randint(0, 100) <= 85 or "skills" not in self.enemy_stats: # Normal Attack
                 baseDamage = self.enemy_stats["attack"]
 
                 critical = False
@@ -555,7 +555,7 @@ class PlayerView(View):
     @discord.ui.button(label="Punch", style=discord.ButtonStyle.danger)
     async def attack_button(self, interaction: discord.Interaction, button: Button):
         evasionChance = 5 + (self.user_entry["agility"] - self.enemy_stats["evasion"])
-        evasionChance = max(5, min(75, evasionChance))
+        evasionChance = max(5, min(90, evasionChance))
 
         randomRoll = random.randint(0, 100)
 

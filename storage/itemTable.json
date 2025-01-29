@@ -26,9 +26,9 @@
     "description": "Can be sold for a bit of gold."
   },
   "orc tooth": {
-    "value": 3,
+    "value": 1,
     "description": "Can be sold for a bit of gold."
-  },
+  },  
   "centaur hoof": {
     "value": 10,
     "description": "Can be sold for a bit of gold."

@@ -28,7 +28,7 @@ class ExerciseView(View):
             exercise_name = exercise["name"]
             exercise_gif = exercise["gif"]
             reps = exercise["reps"]
-            random_factor = random.randint(int(self.user_entry["level"] / 3), int(self.user_entry["level"] / 2))
+            random_factor = max(1, random.randint(int(self.user_entry["level"] / 3), int(self.user_entry["level"] / 2)))
             total_reps = random_factor * reps
             self.reps_done[exercise_name] = 0  
 

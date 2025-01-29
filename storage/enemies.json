@@ -5,7 +5,7 @@
       "attack": 1,
       "defense": 2,
       "precision": 6,
-      "evasion": 4,
+      "evasion": 7,
       "loot": {
         "gold": ["g", 100, 5],
         "goblin ear": ["s", 50, 2],
@@ -18,7 +18,7 @@
       "attack": 1,
       "defense": 1,
       "precision": 8,
-      "evasion": 6,
+      "evasion": 16,
       "loot": {
         "gold": ["g", 100, 6],
         "bone": ["s", 50, 256],
@@ -40,11 +40,11 @@
       "image": "https://cdn.discordapp.com/attachments/1330999204910465126/1333575320191893617/noname-cutout.png?ex=6799644c&is=679812cc&hm=604f137e1cfb12ddee5537e87b7ad13b4dc4ff5c5c404feeb8c3012620d87fdb&"
     },
     "Slime": {
-      "hp": 4,
+      "hp": 1,
       "attack": 1,
       "defense": 5,
       "precision": 1,
-      "evasion": 12,
+      "evasion": 999,
       "loot": {
         "gold": ["g", 100, 4],
         "goo": ["s", 50, 10],
@@ -68,7 +68,7 @@
   },
   "2": {
     "Centaur": {
-      "hp": 13,
+      "hp": 95,
       "attack": 1,
       "defense": 5,
       "precision": 13,
@@ -79,7 +79,7 @@
         "small protein shake": ["c", 26, 2]
       },
       "skills": {
-        "charge": ["100", "The Centaur charges at you!", "ailment", "stiffness"]
+        "charge": ["100", "The Centaur charges at you!", "damage", "2"]
       },
       "image": "https://5e.tools/img/bestiary/tokens/MM/Centaur.webp"
     }

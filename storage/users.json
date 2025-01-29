@@ -1,103 +1,4 @@
 {
-    "450842915024142374": {
-        "level": 8,
-        "hp": 11,
-        "strength": 6,
-        "agility": 22,
-        "endurance": 59,
-        "flexibility": 22,
-        "skill": 31,
-        "hasRoutine": true,
-        "exercisesDone": 3,
-        "workoutMessageId": 1333871098697355405,
-        "groupsDone": [
-            "Full Body",
-            "Back",
-            "Cardio"
-        ],
-        "inventory": {
-            "gold": [
-                "g",
-                2650
-            ],
-            "2.5kgs dumbbell": [
-                "e",
-                "+2 strength"
-            ],
-            "medicine ball": [
-                "e",
-                "+1 hp"
-            ],
-            "yoga mat": [
-                "e",
-                "+2 flexibility"
-            ],
-            "stretch bands": [
-                "e",
-                "+4 flexibility"
-            ],
-            "jump rope": [
-                "e",
-                "+2 agility"
-            ],
-            "gatorade": [
-                "c",
-                9
-            ],
-            "weighted vest": [
-                "e",
-                "+5 endurance"
-            ],
-            "agility ladder": [
-                "e",
-                "+6 agility"
-            ],
-            "ankle weights": [
-                "e",
-                "+3 endurance"
-            ],
-            "resistance band": [
-                "e",
-                "+1 hp"
-            ],
-            "5kgs dumbbell": [
-                "e",
-                "+4 strength"
-            ],
-            "muscle roller": [
-                "c",
-                1
-            ],
-            "massage gel": [
-                "c",
-                8
-            ],
-            "pre workout": [
-                "c",
-                6
-            ],
-            "medicine": [
-                "c",
-                1
-            ],
-            "small energy bar": [
-                "c",
-                5
-            ],
-            "centaur hoof": [
-                "s",
-                11
-            ],
-            "small protein shake": [
-                "c",
-                3
-            ],
-            "bone": [
-                "s",
-                241
-            ]
-        }
-    },
     "345994187742773248": {
         "level": 1,
         "hp": 2,
@@ -143,5 +44,48 @@
             "Back"
         ],
         "inventory": {}
+    },
+    "450842915024142374": {
+        "level": 6,
+        "hp": 8,
+        "strength": 23,
+        "agility": 17,
+        "endurance": 31,
+        "flexibility": 14,
+        "skill": 21,
+        "hasRoutine": true,
+        "workoutMessageId": 1334157268710592604,
+        "exercisesDone": 18,
+        "groupsDone": [
+            "Core",
+            "Arms",
+            "Full Body",
+            "Cardio",
+            "Back",
+            "Legs",
+            "Chest"
+        ],
+        "inventory": {
+            "gold": [
+                "g",
+                13
+            ],
+            "small energy bar": [
+                "c",
+                6
+            ],
+            "2.5kgs dumbbell": [
+                "e",
+                "+2 strength"
+            ],
+            "resistance band": [
+                "e",
+                "+1 hp"
+            ],
+            "jump rope": [
+                "e",
+                "+2 agility"
+            ]
+        }
     }
 }
