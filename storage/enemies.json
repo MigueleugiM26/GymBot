@@ -79,7 +79,7 @@
         "small protein shake": ["c", 26, 2]
       },
       "skills": {
-        "charge": ["100", "The Centaur charges at you!", "damage", "2"]
+        "charge": ["100", "The Centaur charges at you!", "ailment", "stiffness"]
       },
       "image": "https://5e.tools/img/bestiary/tokens/MM/Centaur.webp"
     }

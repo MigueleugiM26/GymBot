@@ -5,10 +5,6 @@ from discord.ui import View, Button
 from discord.app_commands import command
 from commands.globalFunctions import load_user_data, save_user_data
 
-
-with open("storage/enemies.json", "r") as file:
-    enemies_data = json.load(file)
-
 with open("storage/shopTable.json", "r") as file:
     shop_data = json.load(file)
 
@@ -51,11 +47,16 @@ class ReviveView(View):
 
         embed.set_thumbnail(url=self.enemy_stats["image"])
         embed.add_field(name="Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
+
+        strength_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasDisease"] else ""
+        agility_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasExhaustion"] else ""
+        endurance_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasFatigue"] else ""
+        flexibility_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasStiffness"] else ""
         embed.add_field(
         name="",
         value=(
-            f"**Strength**: {self.user_entry['strength']}  |  **Agility**: {self.user_entry['agility']}\n"
-            f"**Endurance**: {self.user_entry['endurance']}  |  **Flexibility**: {self.user_entry['flexibility']}"
+            f"**Strength**: {self.user_entry['strength']} {strength_debuff}  |  **Agility**: {self.user_entry['agility']} {agility_debuff}\n"
+            f"**Endurance**: {self.user_entry['endurance']} {endurance_debuff}  |  **Flexibility**: {self.user_entry['flexibility']} {flexibility_debuff}"
         ),
         inline=False
         )
@@ -114,7 +115,22 @@ class ConsumableButton(Button):
             status_type_key = f"has{statBool}"
             if status_type_key in self.statuses:
                 self.statuses[status_type_key] = False
-                
+
+            match stat:
+                case "disease":
+                    self.user_entry["strength"] += self.statuses["debuffValue"]
+                    self.statuses["debuffValue"] = 0   
+                case "exhaustion":
+                    self.user_entry["agility"] = self.statuses["debuffValue"]
+                    self.statuses["debuffValue"] = 0                     
+                case "fatigue":
+                    self.user_entry["endurance"] += self.statuses["debuffValue"]
+                    self.statuses["debuffValue"] = 0     
+                    
+                case "stiffness":
+                    self.user_entry["flexibility"] += self.statuses["debuffValue"]
+                    self.statuses["debuffValue"] = 0    
+                    
             embed.title = f"You used **{self.item_name.title()}**."
             embed.description = f"It clears **{stat.replace('_', ' ').title()}**."
         else:
@@ -192,16 +208,24 @@ class InventoryView(View):
         for status_key, is_active in self.statuses.items():
             if status_key == "hasStatus":
                 continue
+
+            if status_key == "debuffValue":
+                continue
     
             if is_active: 
                 formatted_status = status_key.replace("has", "").replace("Cramps", " Cramps")
                 embed.add_field(name="", value=f"You are afflicted by **{formatted_status.strip()}**!", inline=False)
         embed.add_field(name=f"Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
+
+        strength_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasDisease"] else ""
+        agility_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasExhaustion"] else ""
+        endurance_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasFatigue"] else ""
+        flexibility_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasStiffness"] else ""
         embed.add_field(
         name="",
         value=(
-            f"**Strength**: {self.user_entry['strength']}  |  **Agility**: {self.user_entry['agility']}\n"
-            f"**Endurance**: {self.user_entry['endurance']}  |  **Flexibility**: {self.user_entry['flexibility']}"
+            f"**Strength**: {self.user_entry['strength']} {strength_debuff}  |  **Agility**: {self.user_entry['agility']} {agility_debuff}\n"
+            f"**Endurance**: {self.user_entry['endurance']} {endurance_debuff}  |  **Flexibility**: {self.user_entry['flexibility']} {flexibility_debuff}"
         ),
         inline=False
         )
@@ -242,17 +266,25 @@ class EnemyView(View):
             for status_key, is_active in self.statuses.items():
                 if status_key == "hasStatus":
                     continue
+
+                if status_key == "debuffValue":
+                    continue
         
                 if is_active: 
                     formatted_status = status_key.replace("has", "").replace("Cramps", " Cramps")
                     embed.add_field(name="", value=f"You are afflicted by **{formatted_status.strip()}**!", inline=False)
 
             embed.add_field(name=f"Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
+
+            strength_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasDisease"] else ""
+            agility_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasExhaustion"] else ""
+            endurance_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasFatigue"] else ""
+            flexibility_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasStiffness"] else ""
             embed.add_field(
             name="",
             value=(
-                f"**Strength**: {self.user_entry['strength']}  |  **Agility**: {self.user_entry['agility']}\n"
-                f"**Endurance**: {self.user_entry['endurance']}  |  **Flexibility**: {self.user_entry['flexibility']}"
+                f"**Strength**: {self.user_entry['strength']} {strength_debuff}  |  **Agility**: {self.user_entry['agility']} {agility_debuff}\n"
+                f"**Endurance**: {self.user_entry['endurance']} {endurance_debuff}  |  **Flexibility**: {self.user_entry['flexibility']} {flexibility_debuff}"
             ),
             inline=False
             )
@@ -260,7 +292,7 @@ class EnemyView(View):
             view = PlayerView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, self.interaction)
             await interaction.message.edit(embed=embed, view=view)
         else:
-            if self.statuses["hasStatus"] or random.randint(0, 100) <= 5 or "skills" not in self.enemy_stats:
+            if self.statuses["hasStatus"] or random.randint(0, 100) <= 50 or "skills" not in self.enemy_stats: # Normal Attack
                 baseDamage = self.enemy_stats["attack"]
 
                 critical = False
@@ -353,22 +385,30 @@ class EnemyView(View):
                         if status_key == "hasStatus":
                             continue
 
+                        if status_key == "debuffValue":
+                            continue
+
                         if is_active: 
                             formatted_status = status_key.replace("has", "").replace("Cramps", " Cramps")
                             embed.add_field(name="", value=f"You are afflicted by **{formatted_status.strip()}**!", inline=False)
                     embed.add_field(name=f"Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
+
+                    strength_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasDisease"] else ""
+                    agility_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasExhaustion"] else ""
+                    endurance_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasFatigue"] else ""
+                    flexibility_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasStiffness"] else ""
                     embed.add_field(
                     name="",
                     value=(
-                        f"**Strength**: {self.user_entry['strength']}  |  **Agility**: {self.user_entry['agility']}\n"
-                        f"**Endurance**: {self.user_entry['endurance']}  |  **Flexibility**: {self.user_entry['flexibility']}"
+                        f"**Strength**: {self.user_entry['strength']} {strength_debuff}  |  **Agility**: {self.user_entry['agility']} {agility_debuff}\n"
+                        f"**Endurance**: {self.user_entry['endurance']} {endurance_debuff}  |  **Flexibility**: {self.user_entry['flexibility']} {flexibility_debuff}"
                     ),
                     inline=False
                     )
 
                     view = PlayerView(self.user_entry, self.enemy_name, self.enemy_stats, self.statuses, self.interaction)
                     await interaction.message.edit(embed=embed, view=view)
-            else:
+            else: # Use Skill
                 skill_name, skill_data = None, None
                 if "skills" in self.enemy_stats:
                     total_chance = sum(int(data[0]) for data in self.enemy_stats["skills"].values())
@@ -395,7 +435,21 @@ class EnemyView(View):
                         status_key = f"has{statBool}"
                         if status_key in self.statuses:
                             self.statuses[status_key] = True
-                        self.statuses["hasStatus"] = True                        
+                        self.statuses["hasStatus"] = True  
+                         
+                        match skill_effect:
+                            case "disease":
+                                self.statuses["debuffValue"] = 25 * self.user_entry["strength"] / 100    
+                                self.user_entry["strength"] -= self.statuses["debuffValue"]
+                            case "exhaustion":
+                                self.statuses["debuffValue"] = 25 * self.user_entry["agility"] / 100    
+                                self.user_entry["agility"] -= self.statuses["debuffValue"]
+                            case "fatigue":
+                                self.statuses["debuffValue"] = 25 * self.user_entry["endurance"] / 100    
+                                self.user_entry["endurance"] -= self.statuses["debuffValue"]
+                            case "stiffness":
+                                self.statuses["debuffValue"] = 25 * self.user_entry["flexibility"] / 100    
+                                self.user_entry["flexibility"] -= self.statuses["debuffValue"]
 
                 if self.user_entry["hp"] <= 0:
                     reviveChance = max(20, self.user_entry["endurance"] / 10)
@@ -466,11 +520,16 @@ class EnemyView(View):
                         embed.add_field(name=f"{skill_description}", value=f"You are afflicted by **{skill_effect}**!", inline=False)
 
                     embed.add_field(name=f"Your stats:", value=f"**HP**: {self.user_entry['hp']} {health_bar}", inline=False)
+
+                    strength_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasDisease"] else ""
+                    agility_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasExhaustion"] else ""
+                    endurance_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasFatigue"] else ""
+                    flexibility_debuff = f" (-{self.statuses["debuffValue"]})" if self.statuses["hasStiffness"] else ""
                     embed.add_field(
                     name="",
                     value=(
-                        f"**Strength**: {self.user_entry['strength']}  |  **Agility**: {self.user_entry['agility']}\n"
-                        f"**Endurance**: {self.user_entry['endurance']}  |  **Flexibility**: {self.user_entry['flexibility']}"
+                        f"**Strength**: {self.user_entry['strength']} {strength_debuff}  |  **Agility**: {self.user_entry['agility']} {agility_debuff}\n"
+                        f"**Endurance**: {self.user_entry['endurance']} {endurance_debuff}  |  **Flexibility**: {self.user_entry['flexibility']} {flexibility_debuff}"
                     ),
                     inline=False
                     )
@@ -657,6 +716,9 @@ class PlayerView(View):
 
 @command(name='dungeon', description='Adventure inside a dungeon.')
 async def dungeon(interaction, level: int):
+    with open("storage/enemies.json", "r") as file:
+        enemies_data = json.load(file)
+
     if str(level) not in enemies_data:
         await interaction.response.send_message(f"Invalid dungeon level. Please choose a valid level.", ephemeral=True)
         return
@@ -680,7 +742,8 @@ async def dungeon(interaction, level: int):
         "hasBurning": False,
         "hasFatigue": False,
         "hasDisorientation": False,
-        "hasDisease": False
+        "hasDisease": False,
+        "debuffValue": 0
     }
 
     level_enemies = enemies_data[str(level)]
