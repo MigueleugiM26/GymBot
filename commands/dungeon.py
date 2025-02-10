@@ -1,9 +1,12 @@
 import discord
 import json
 import random
+import asyncio
 from discord.ui import View, Button
 from discord.app_commands import command
+from discord import Message
 from commands.globalFunctions import load_user_data, save_user_data
+from datetime import datetime, timedelta
 
 with open("storage/shopTable.json", "r") as file:
     shop_data = json.load(file)
@@ -16,6 +19,66 @@ def generate_health_bar(current_hp, bar_length=10):
     filled_length = round(bar_length * current_hp / max_hp) 
     empty_length = bar_length - filled_length
     return "🟥" * filled_length + "⬛" * empty_length
+
+class TimeoutManager:
+    _tasks = {}
+    _last_activity = {}
+
+    @classmethod
+    def record_activity(cls, user_id):
+        cls._last_activity[user_id] = datetime.now()
+
+    @classmethod
+    async def start_global_timer(cls, user_id, user_entry, message_id, enemy_name, enemy_stats, interaction, client):
+        if user_id in cls._tasks:
+            cls._tasks[user_id].cancel()
+
+        cls.record_activity(user_id) 
+        print(f"Recorded activity for {user_id}: {cls._last_activity[user_id]}")
+
+        async def inactivity_checker():
+            try:
+                while True:
+                    await asyncio.sleep(5)  # Check every 5 seconds
+                    print(f"Recorded activity for {user_id}: {cls._last_activity[user_id]}")
+                    if user_id not in cls._last_activity:
+                        print(f"User {user_id} has no recorded activity. Exiting checker.")
+                        return  
+
+                    last_activity = cls._last_activity[user_id]
+                    if datetime.now() - last_activity >= timedelta(seconds=10):  # inactivity time
+                        print(f"Disabling.")                        
+
+                        embed = discord.Embed(
+                            title=f"The {enemy_name} defeats you!",
+                            description="You took too long to act!",
+                            color=discord.Color.dark_red()
+                        )
+                        embed.set_thumbnail(url=enemy_stats["image"])
+
+                        embed.add_field(name="", value=f"You have fallen! The gym quickly calls an ambulance!", inline=False)
+
+                        message = await cls.fetch_message_by_id(message_id, client)
+                        await message.edit(embed=embed, view=None)
+                        cls.cancel_timer(user_id)
+                        break 
+            except asyncio.CancelledError:
+                pass 
+
+        cls._tasks[user_id] = asyncio.create_task(inactivity_checker())
+
+    @classmethod
+    async def fetch_message_by_id(cls, message_id, client):
+        channel = await client.fetch_channel('1180945248709517385') 
+        message = await channel.fetch_message(message_id)
+        return message
+
+    @classmethod
+    def cancel_timer(cls, user_id):
+        if user_id in cls._tasks:
+            cls._tasks[user_id].cancel()
+            del cls._tasks[user_id]
+        cls._last_activity.pop(user_id, None)
 
 
 class ReviveView(View):
@@ -551,6 +614,12 @@ class PlayerView(View):
         self.interaction = interaction
 
         self.skills_button.disabled = self.statuses.get("hasMuscleCramps", False)
+
+
+    async def interaction_check(self, interaction: discord.Interaction) -> bool:
+        user_id = interaction.user.id
+        TimeoutManager.record_activity(user_id)     
+        return True
         
     @discord.ui.button(label="Punch", style=discord.ButtonStyle.danger)
     async def attack_button(self, interaction: discord.Interaction, button: Button):
@@ -733,6 +802,16 @@ async def dungeon(interaction, level: int):
             ephemeral=True
         )
         return
+    
+    if user_entry["battles"] >= 20:
+        await interaction.response.send_message(
+            "You've used all of your energy today!",
+            ephemeral=True
+        )
+        return
+    
+    user_data[user_id]["battles"] += 1  
+    save_user_data(user_data)
 
     statuses = {
         "hasStatus": False,
@@ -770,7 +849,16 @@ async def dungeon(interaction, level: int):
     )
 
     view = PlayerView(user_entry, enemy_name, enemy_stats, statuses, interaction)
-    await interaction.response.send_message(embed=embed, view=view)
+    await interaction.response.defer()
+
+    dungeon_message: Message = await interaction.followup.send(
+        content=None,  
+        embed=embed,
+        view=view
+    )
+
+    message_id = dungeon_message.id
+    await TimeoutManager.start_global_timer(user_id, user_entry, message_id, enemy_name, enemy_stats, interaction, interaction.client)
 
 def setup(command_tree):
     command_tree.add_command(dungeon)

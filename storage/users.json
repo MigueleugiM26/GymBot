@@ -1,72 +1,95 @@
 {
-  "345994187742773248": {
-    "level": 1,
-    "hp": 2,
-    "strength": 8,
-    "agility": 2,
-    "endurance": 5,
-    "flexibility": 1,
-    "skill": 3,
-    "hasRoutine": false,
-    "exercisesDone": 0,
-    "workoutMessageId": "",
-    "groupsDone": [],
-    "inventory": {}
-  },
-  "390836821723971594": {
-    "level": 1,
-    "hp": 2,
-    "strength": 3,
-    "agility": 0,
-    "endurance": 4,
-    "flexibility": 0,
-    "skill": 2,
-    "hasRoutine": false,
-    "exercisesDone": 0,
-    "workoutMessageId": 1333155609033310259,
-    "groupsDone": ["Full Body"],
-    "inventory": {}
-  },
-  "1320866560663097517": {
-    "level": 1,
-    "hp": 2,
-    "strength": 3,
-    "agility": 2,
-    "endurance": 2,
-    "flexibility": 1,
-    "skill": 1,
-    "hasRoutine": false,
-    "workoutMessageId": 1333172673018335256,
-    "exercisesDone": 0,
-    "groupsDone": ["Back"],
-    "inventory": {}
-  },
-  "450842915024142374": {
-    "level": 6,
-    "hp": 8,
-    "strength": 23,
-    "agility": 17,
-    "endurance": 31,
-    "flexibility": 14,
-    "skill": 22,
-    "hasRoutine": true,
-    "workoutMessageId": 1334157268710592604,
-    "exercisesDone": 18,
-    "groupsDone": [
-      "Core",
-      "Arms",
-      "Full Body",
-      "Cardio",
-      "Back",
-      "Legs",
-      "Chest"
-    ],
-    "inventory": {
-      "gold": ["g", 13],
-      "small energy bar": ["c", 6],
-      "2.5kgs dumbbell": ["e", "+2 strength"],
-      "resistance band": ["e", "+1 hp"],
-      "jump rope": ["e", "+2 agility"]
+    "345994187742773248": {
+        "level": 1,
+        "hp": 2,
+        "strength": 8,
+        "agility": 2,
+        "endurance": 5,
+        "flexibility": 1,
+        "skill": 3,
+        "hasRoutine": false,
+        "exercisesDone": 0,
+        "workoutMessageId": "",
+        "groupsDone": [],
+        "battles": 0,
+        "inventory": {}
+    },
+    "390836821723971594": {
+        "level": 1,
+        "hp": 2,
+        "strength": 3,
+        "agility": 0,
+        "endurance": 4,
+        "flexibility": 0,
+        "skill": 2,
+        "hasRoutine": false,
+        "exercisesDone": 0,
+        "workoutMessageId": 1333155609033310259,
+        "groupsDone": [
+            "Full Body"
+        ],
+        "battles": 0,
+        "inventory": {}
+    },
+    "1320866560663097517": {
+        "level": 1,
+        "hp": 2,
+        "strength": 3,
+        "agility": 2,
+        "endurance": 2,
+        "flexibility": 1,
+        "skill": 1,
+        "hasRoutine": false,
+        "workoutMessageId": 1333172673018335256,
+        "exercisesDone": 0,
+        "groupsDone": [
+            "Back"
+        ],
+        "battles": 0,
+        "inventory": {}
+    },
+    "450842915024142374": {
+        "level": 6,
+        "hp": 8,
+        "strength": 23,
+        "agility": 17,
+        "endurance": 31,
+        "flexibility": 14,
+        "skill": 22,
+        "hasRoutine": true,
+        "workoutMessageId": 1334157268710592604,
+        "exercisesDone": 18,
+        "groupsDone": [
+            "Core",
+            "Arms",
+            "Full Body",
+            "Cardio",
+            "Back",
+            "Legs",
+            "Chest"
+        ],
+        "battles": 11,
+        "inventory": {
+            "gold": [
+                "g",
+                13
+            ],
+            "small energy bar": [
+                "c",
+                6
+            ],
+            "2.5kgs dumbbell": [
+                "e",
+                "+2 strength"
+            ],
+            "resistance band": [
+                "e",
+                "+1 hp"
+            ],
+            "jump rope": [
+                "e",
+                "+2 agility"
+            ]
+        }
     }
-  }
 }
